@@ -1,0 +1,31 @@
+[package]
+name = "echo-rust"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+hound = "3.5.1"
+libc = "0.2.155"
+mio = "1.0.1"
+openssl = { version="0.10.42", features = ["vendored"] }
+rustpotter = "3.0.2"
+tokio = { version="1.39.2", features = ["full"] }
+wave_stream = "0.5.0"
+# tinyalsa = { git = "https://github.com/dgreid/rust_tinyalsa", version = "0.1.0" }
+
+[workspace.metadata.cross.target.armv7-linux-androideabi]
+pre-build = [
+    "dpkg --add-architecture $CROSS_DEB_ARCH",
+    # "find / -name '*.so' && exit 1",
+    "apt-get update && apt-get --assume-yes install git pkg-config pkg-config:$CROSS_DEB_ARCH",
+    "git clone https://github.com/duslabo/tinyalsa-ndk",
+    "cd tinyalsa-ndk && cp libs/armeabi/* /system/lib && cp -r include/tinyalsa /android-ndk/include/",
+]
+
+rustflags = [
+    "-L", "/home/isaac/git/tinyalsa-ndk/libs/armeabi/",
+]
+
+passthrough = [
+    "LD_PRELOAD",
+]

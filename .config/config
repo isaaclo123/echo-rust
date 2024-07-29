@@ -1,0 +1,10 @@
+[target.armv7-linux-androideabi]
+rustflags = [
+    "-C", "linker=armv7a-unknown-linux-androideabi-ld",
+]
+linker = "armv7a-unknown-linux-androideabi-cc"
+ar = "armv7a-unknown-linux-androideabi-ar"
+ld = "armv7a-unknown-linux-androideabi-ld"
+# rustflags = [
+#     "-C", "link-arg=-fuse-ld=armv7a-unknown-linux-androideabi-ld",
+# ]
