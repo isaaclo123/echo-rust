@@ -3,6 +3,9 @@ name = "echo-rust"
 version = "0.1.0"
 edition = "2018"
 
+[env]
+LD_LIBRARY_PATH = "$NIX_LD_LIBRARY_PATH"
+
 [dependencies]
 hound = "3.5.1"
 libc = "0.2.155"
