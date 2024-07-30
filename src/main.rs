@@ -3,7 +3,7 @@ use std::process::Command;
 use std::ptr::{null, null_mut};
 extern crate libc;
 
-use libc::{c_int, c_uint, c_void};
+use libc::{c_int, c_uint, c_void, FILE};
 use std::ffi::CStr;
 
 use libc::free;
@@ -13,7 +13,8 @@ use rustpotter::{
     RustpotterConfig, RustpotterDetection, ScoreMode,
 };
 use tokio::fs::File;
-use tokio::io::AsyncReadExt;
+use tokio::io::AsyncWriteExt;
+use tokio::io::{stdout, AsyncReadExt};
 mod libtinyalsa;
 use crate::libtinyalsa::{
     pcm_close, pcm_config, pcm_format_PCM_FORMAT_S32_LE, pcm_format_to_bits, pcm_frames_to_bytes,
@@ -25,6 +26,7 @@ use crate::libtinyalsa::{
 //const NAMED_PIPE: &str = "./test.wav";
 // const NAMED_PIPE: &str = "./tests/resources/alexa.wav";
 // const NAMED_PIPE: &str = "/data/local/tmp/audio_fifo";
+const AUDIO_FILE: &str = "./audio_fifo";
 
 #[tokio::main]
 async fn main() {
@@ -48,12 +50,19 @@ async fn main() {
     // wav setup
     println!("setup wav reader!");
 
+    let card: c_uint = 1;
+    let device: c_uint = 0;
+    let rate: c_uint = 48000;
+    let channels: c_uint = 2;
+    let period_size = 1024;
+    let format = pcm_format_PCM_FORMAT_S32_LE;
+
     // let wav_spec: rustpotter::AudioFmt = AudioFmt::try_from(wav_reader.spec()).expect("Unable to get wav spec")
     rustpotter_config.fmt = AudioFmt {
-        sample_rate: 16000,
+        sample_rate: rate as usize,
         sample_format: rustpotter::SampleFormat::I32,
-        channels: 9,
-        endianness: rustpotter::Endianness::Native,
+        channels: channels as u16,
+        endianness: rustpotter::Endianness::Little,
     };
 
     // rustpotter
@@ -69,26 +78,16 @@ async fn main() {
     // let mut buf = vec![0; rustpotter.get_bytes_per_frame()];
 
     unsafe {
-        let bits: c_uint = 32;
-        let card: c_uint = 0;
-        let device: c_uint = 0;
-        let f_flag: c_uint = 1;
-        let rate: c_uint = 48000;
-        let channels: c_uint = 2;
-        let period_size = 1024;
-
         let mut pcm_config = Box::into_raw(Box::new(pcm_config {
             channels: channels,
             rate: rate,
-            format: pcm_format_PCM_FORMAT_S32_LE,
+            format: format,
             period_size: period_size,
             period_count: 2,
             start_threshold: 0,
             silence_threshold: 0,
             stop_threshold: 0,
         }));
-
-        println!("{:?}", pcm_config);
 
         let pcm = pcm_open(card, device, PCM_IN, pcm_config);
 
@@ -102,30 +101,28 @@ async fn main() {
         }
 
         let buffer_size = pcm_get_buffer_size(pcm);
-        println!("{:} buffersize", buffer_size);
         let mut bytes = pcm_frames_to_bytes(pcm, buffer_size);
-        println!("{:} bytes", bytes);
         // let buf = malloc(bytes.try_into().unwrap());
         // let mut buf = Vec::<u8>::with_capacity(bytes.try_into().unwrap());
         let mut buf: [u8; 16384] = [0; 16384];
         // let mut buf: Vec<u8> = vec![0.try_into().unwrap(), bytes.try_into().unwrap()];
         println!("{:?} BUF ", buf);
 
-        let new_bits = pcm_format_to_bits(bits);
+        let bits = pcm_format_to_bits(format);
         println!(
             "Capturing sample: {} ch, {} hz, {} bit\n",
-            channels, rate, new_bits
+            channels, rate, bits
         );
+
+        println!("before file");
+        // let mut file = File::create(AUDIO_FILE).await.expect("Failed to open file");
+        // file.write_all(b"TESTING").await.unwrap();
+
+        let mut stdout = stdout();
 
         loop {
             let frames_read = pcm_read(pcm, buf.as_mut_ptr() as *mut c_void, bytes);
-            println!(
-                "{:p} new BUF, {:} bytes, {:} retval",
-                buf.as_mut_ptr(),
-                bytes,
-                frames_read
-            );
-            println!("bytesfield {:#?}", &buf);
+            stdout.write_all(&buf).await.unwrap();
 
             if frames_read < 0 {
                 let error = pcm_get_error(pcm);
@@ -136,7 +133,7 @@ async fn main() {
                 continue;
             }
 
-            let detection = rustpotter.process_bytes(buf.as_slice());
+            let detection = rustpotter.process_bytes(&buf);
 
             if let Some(detection) = detection {
                 println!("{:?}", detection);
