@@ -122,7 +122,7 @@ async fn main() {
 
         loop {
             let frames_read = pcm_read(pcm, buf.as_mut_ptr() as *mut c_void, bytes);
-            stdout.write_all(&buf).await.unwrap();
+            // stdout.write_all(&buf).await.unwrap();
 
             if frames_read < 0 {
                 let error = pcm_get_error(pcm);
@@ -133,46 +133,33 @@ async fn main() {
                 continue;
             }
 
+            println!(
+                "bufferlen: {:} bytes: {:}, sampframe: {:}",
+                buf.len(),
+                rustpotter.get_bytes_per_frame(),
+                rustpotter.get_samples_per_frame()
+            );
+
+            /*
+            pub fn process_samples<T: Sample>(
+                &mut self,
+                audio_samples: Vec<T>,
+            ) -> Option<RustpotterDetection> {
+                if audio_samples.len() != self.get_samples_per_frame() {
+                    return None;
+                }
+                let float_samples = self.wav_encoder.rencode_and_resample::<T>(audio_samples);
+                self.process_audio(float_samples)
+            }
+             */
+
             let detection = rustpotter.process_bytes(&buf);
 
             if let Some(detection) = detection {
                 println!("{:?}", detection);
             }
 
-            // println!("{:} bytes read", read_success);
-            // println!("{:}", CStr::from_ptr(buf as *const i8 ).to_str().unwrap());
-            // println!("{:}", CStr::from_ptr(buf).to_string_lossy());
-        }
-        // while (i < 50000) {
-        //   let read_success = pcm_read(pcm, buf, bytes);
-        //   if ( bytes < i || read_success ) {
-        //     break;
-        //   }
-        //   // if ( _fwrite_chk(buf, 1, bytes, filename, -1) != bytes ) {          eprintln!("Error capturing sample\n");
-        //   //   break;
-        //   // }
-        //   i += bytes;
-        // }
-        // frames = pcm_bytes_to_frames(pcm, i);
-        pcm_close(pcm);
-    }
-
-    /*
-    loop {
-        let named_pipe = File::open(NAMED_PIPE)
-            .await
-            .expect("Failed to open named pipe");
-        let mut handle = named_pipe.take(rustpotter.get_bytes_per_frame().try_into().unwrap());
-
-        handle.read(&mut buf).await;
-
-        // println!("{:?}", buf);
-
-        let detection = rustpotter.process_bytes(&buf);
-
-        if let Some(detection) = detection {
-            println!("{:?}", detection);
+            pcm_close(pcm);
         }
     }
-    */
 }
