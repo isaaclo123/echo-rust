@@ -100,13 +100,13 @@ async fn main() {
             return ();
         }
 
+        // pcm->buffer_size = config->period_count * config->period_size;
         let buffer_size = pcm_get_buffer_size(pcm);
-        let mut bytes = pcm_frames_to_bytes(pcm, buffer_size);
+        let bytes = pcm_frames_to_bytes(pcm, buffer_size);
         // let buf = malloc(bytes.try_into().unwrap());
         // let mut buf = Vec::<u8>::with_capacity(bytes.try_into().unwrap());
-        let mut buf: [u8; 16384] = [0; 16384];
+        let mut buf: Vec<u8> = vec![0; bytes as usize];
         // let mut buf: Vec<u8> = vec![0.try_into().unwrap(), bytes.try_into().unwrap()];
-        println!("{:?} BUF ", buf);
 
         let bits = pcm_format_to_bits(format);
         println!(
@@ -124,21 +124,22 @@ async fn main() {
             let frames_read = pcm_read(pcm, buf.as_mut_ptr() as *mut c_void, bytes);
             // stdout.write_all(&buf).await.unwrap();
 
-            if frames_read < 0 {
-                let error = pcm_get_error(pcm);
-                eprintln!(
-                    "error in read ({:})",
-                    CStr::from_ptr(error).to_str().unwrap()
-                );
-                continue;
-            }
-
             println!(
                 "bufferlen: {:} bytes: {:}, sampframe: {:}",
                 buf.len(),
                 rustpotter.get_bytes_per_frame(),
                 rustpotter.get_samples_per_frame()
             );
+
+            if frames_read < 0 {
+                let error = pcm_get_error(pcm);
+                eprintln!(
+                    "{:} error in read ({:})",
+                    frames_read,
+                    CStr::from_ptr(error).to_str().unwrap()
+                );
+                continue;
+            }
 
             /*
             pub fn process_samples<T: Sample>(
@@ -158,8 +159,7 @@ async fn main() {
             if let Some(detection) = detection {
                 println!("{:?}", detection);
             }
-
-            pcm_close(pcm);
         }
+        pcm_close(pcm);
     }
 }
