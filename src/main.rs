@@ -145,8 +145,6 @@ async fn main() {
                 break;
             }
 
-            // samples.into_iter().take_while(predicate)
-
             // coverts i24 buf into i32
             let i32_buf = convert_i24_buf_to_le_i32(&buf);
             // println!(
