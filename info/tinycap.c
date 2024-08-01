@@ -6,18 +6,16 @@
 
 #include <defs.h>
 
-
 //-------------------------------------------------------------------------
 // Function declarations
 
 void sub_858();
-// int __fastcall _cxa_atexit(void (__fastcall *lpfunc)(void *), void *obj, void *lpdso_handle);
-// int __fastcall _register_atfork(_DWORD, _DWORD, _DWORD, _DWORD); weak
-// FILE *fopen(const char *filename, const char *modes);
-// int strcmp(const char *s1, const char *s2);
-// int atoi(const char *nptr);
-// int __fastcall pcm_format_to_bits(_DWORD); weak
-// int fseek(FILE *stream, int off, int whence);
+// int __fastcall _cxa_atexit(void (__fastcall *lpfunc)(void *), void *obj, void
+// *lpdso_handle); int __fastcall _register_atfork(_DWORD, _DWORD, _DWORD,
+// _DWORD); weak FILE *fopen(const char *filename, const char *modes); int
+// strcmp(const char *s1, const char *s2); int atoi(const char *nptr); int
+// __fastcall pcm_format_to_bits(_DWORD); weak int fseek(FILE *stream, int off,
+// int whence);
 // __sighandler_t signal(int sig, __sighandler_t handler);
 // int printf(const char *format, ...);
 // int __fastcall _fwrite_chk(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD); weak
@@ -44,7 +42,8 @@ int __fastcall sub_A84(void *a1);
 int __fastcall sub_AD0(int a1, int a2, int a3);
 int *sub_B18();
 int __fastcall main(int argc, const char **argv, const char **envp);
-int __fastcall sub_E80(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9);
+int __fastcall sub_E80(int a1, int a2, int a3, int a4, int a5, int a6, int a7,
+                       int a8, int a9);
 unsigned int *__fastcall sub_1020(unsigned int *result, int *a2, int *a3);
 int __fastcall sub_1074(int a1, int a2, unsigned int a3, unsigned int a4);
 int __fastcall sub_1324(int a1, int a2, unsigned int a3, int a4, _QWORD *a5);
@@ -89,11 +88,13 @@ int __fastcall sub_1DCE(int a1);
 int __fastcall sub_1DD4(int a1, int a2, int a3, _DWORD *a4);
 int __fastcall sub_1E44(int *a1, int a2);
 int __fastcall sub_1EBA(int result);
-void __fastcall __noreturn sub_1EC4(const char *a1, const char *a2, int a3, const char *a4);
+void __fastcall __noreturn sub_1EC4(const char *a1, const char *a2, int a3,
+                                    const char *a4);
 bool __fastcall sub_1EF0(int a1);
 _DWORD *__fastcall sub_1F44(int a1);
 int __fastcall sub_1F9C(int *a1, int a2, _DWORD *a3);
-_DWORD *__fastcall sub_2140(_DWORD *a1, int a2, int a3, _DWORD *a4, int a5, int a6, int a7, _DWORD *a8);
+_DWORD *__fastcall sub_2140(_DWORD *a1, int a2, int a3, _DWORD *a4, int a5,
+                            int a6, int a7, _DWORD *a8);
 int __fastcall sub_25CC(int a1);
 void sub_25E0();
 void sub_25E8();
@@ -106,46 +107,39 @@ _DWORD *__fastcall sub_2660(int *a1);
 //-------------------------------------------------------------------------
 // Data declarations
 
-char byte_4 = '\x01'; // weak
+char byte_4 = '\x01';            // weak
 void *off_4DE0 = (void *)0x17A1; // weak
-int dword_5000 = 1; // weak
-_UNKNOWN unk_5004; // weak
-_UNKNOWN unk_5008; // weak
+int dword_5000 = 1;              // weak
+_UNKNOWN unk_5004;               // weak
+_UNKNOWN unk_5008;               // weak
 // extern _UNKNOWN _stack_chk_guard; weak
 // extern struct _IO_FILE *stderr;
 
-
 //----- (00000858) --------------------------------------------------------
-void sub_858()
-{
-  JUMPOUT(0);
-}
+void sub_858() { JUMPOUT(0); }
 // 864: control flows out of bounds to 0
 
 //----- (00000A58) --------------------------------------------------------
-int (*__fastcall sub_A58(int (*result)(void)))(void)
-{
-  if ( result )
+int (*__fastcall sub_A58(int (*result)(void)))(void) {
+  if (result)
     return (int (*)(void))result();
   return result;
 }
 
 //----- (00000A84) --------------------------------------------------------
-int __fastcall sub_A84(void *a1)
-{
-  return _cxa_atexit((void (__fastcall *)(void *))sub_A58, a1, &unk_5004);
+int __fastcall sub_A84(void *a1) {
+  return _cxa_atexit((void(__fastcall *)(void *))sub_A58, a1, &unk_5004);
 }
 
 //----- (00000AD0) --------------------------------------------------------
-int __fastcall sub_AD0(int a1, int a2, int a3)
-{
+int __fastcall sub_AD0(int a1, int a2, int a3) {
   return _register_atfork(a1, a2, a3, &unk_5004);
 }
-// 884: using guessed type int __fastcall _register_atfork(_DWORD, _DWORD, _DWORD, _DWORD);
+// 884: using guessed type int __fastcall _register_atfork(_DWORD, _DWORD,
+// _DWORD, _DWORD);
 
 //----- (00000B18) --------------------------------------------------------
-int *sub_B18()
-{
+int *sub_B18() {
   int *result; // r0
 
   result = &dword_5000;
@@ -155,218 +149,196 @@ int *sub_B18()
 // 5000: using guessed type int dword_5000;
 
 //----- (00000B30) --------------------------------------------------------
-int __fastcall main(int argc, const char **argv, const char **envp)
-{
-  FILE *v4; // r0
-  const char *v5; // r6
-  const char **v6; // r9
-  const char *v7; // t1
-  int v8; // r5
-  int v9; // r7
-  int v10; // r0
-  bool v11; // zf
-  const char *v12; // r8
-  int v13; // r0
-  const char *v14; // t1
-  const char *v15; // t1
-  const char *v16; // t1
-  const char *v17; // t1
-  const char *v18; // t1
-  const char *v19; // t1
-  const char *v20; // t1
-  const char *v21; // t1
-  int v22; // r4
-  unsigned __int16 v23; // r0
-  int v24; // r1
-  unsigned __int16 v25; // r6
-  int v26; // r9
-  int v27; // r4
-  FILE *stream; // [sp+14h] [bp-74h]
-  int v30; // [sp+18h] [bp-70h]
-  int v31; // [sp+1Ch] [bp-6Ch]
-  int v32; // [sp+20h] [bp-68h]
-  int v33; // [sp+24h] [bp-64h]
-  int v34; // [sp+28h] [bp-60h]
-  int v35; // [sp+2Ch] [bp-5Ch]
-  int v36; // [sp+30h] [bp-58h]
-  _QWORD v37[2]; // [sp+34h] [bp-54h] BYREF
-  int v38; // [sp+44h] [bp-44h]
-  __int16 v39; // [sp+48h] [bp-40h]
-  __int16 v40; // [sp+4Ah] [bp-3Eh]
-  int v41; // [sp+4Ch] [bp-3Ch]
-  int v42; // [sp+50h] [bp-38h]
-  __int16 v43; // [sp+54h] [bp-34h]
-  unsigned __int16 v44; // [sp+56h] [bp-32h]
-  int v45; // [sp+58h] [bp-30h]
-  int v46; // [sp+5Ch] [bp-2Ch]
+int __fastcall main(int argc, const char **argv, const char **envp) {
+  FILE *v4;                    // r0
+  const char *v5;              // r6
+  const char **iter_argv;      // r9
+  const char *v7;              // t1
+  int channels;                // r5
+  int rate;                    // r7
+  int f_flag_argv;             // r0
+  bool v11;                    // zf
+  const char *argv_arr;        // r8
+  int v13;                     // r0
+  const char *device;          // t1
+  const char *channel_val;     // t1
+  const char *rate_val;        // t1
+  const char *bits_val;        // t1
+  const char *card_val;        // t1
+  const char *period_size_val; // t1
+  const char *n_periods_val;   // t1
+  const char *f_flag_result;   // t1
+  int pcm_format;              // r4
+  unsigned __int16 v23;        // r0
+  int v24;                     // r1
+  unsigned __int16 v25;        // r6
+  int v26;                     // r9
+  int v27;                     // r4
+  FILE *stream;                // [sp+14h] [bp-74h]
+  int v30;                     // [sp+18h] [bp-70h]
+  int n_periods;               // [sp+1Ch] [bp-6Ch]
+  int v32;                     // [sp+20h] [bp-68h]
+  int period_size;             // [sp+24h] [bp-64h]
+  int card_result;             // [sp+28h] [bp-60h]
+  int bit_result;              // [sp+2Ch] [bp-5Ch]
+  int deviceval;               // [sp+30h] [bp-58h]
+  _QWORD v37[2];               // [sp+34h] [bp-54h] BYREF
+  int v38;                     // [sp+44h] [bp-44h]
+  __int16 v39;                 // [sp+48h] [bp-40h]
+  __int16 v40;                 // [sp+4Ah] [bp-3Eh]
+  int v41;                     // [sp+4Ch] [bp-3Ch]
+  int v42;                     // [sp+50h] [bp-38h]
+  __int16 v43;                 // [sp+54h] [bp-34h]
+  unsigned __int16 v44;        // [sp+56h] [bp-32h]
+  int v45;                     // [sp+58h] [bp-30h]
+  int v46;                     // [sp+5Ch] [bp-2Ch]
 
-  if ( argc <= 1 )
-  {
-    fprintf(
-      stderr,
-      "Usage: %s file.wav [-D card] [-d device] [-c channels] [-r rate] [-b bits] [-p period_size] [-n n_periods] [-t duration] [-f]\n",
-      *argv);
+  if (argc <= 1) {
+    fprintf(stderr,
+            "Usage: %s file.wav [-D card] [-d device] [-c channels] [-r rate] "
+            "[-b bits] [-p period_size] [-n n_periods] [-t duration] [-f]\n",
+            *argv);
     return 1;
   }
   v4 = fopen(argv[1], "wb");
-  if ( !v4 )
-  {
+  if (!v4) {
     fprintf(stderr, "Unable to create file '%s'\n", argv[1]);
     return 1;
   }
   stream = v4;
   v7 = argv[2];
-  v6 = argv + 2;
+  iter_argv = argv + 2;
   v5 = v7;
-  v8 = 2;
-  v33 = 1024;
-  v31 = 4;
-  v9 = 44100;
+  channels = 2;       // channels
+  period_size = 1024; // period size
+  n_periods = 4;      // n_periods
+  rate = 44100;       // rate
   v32 = 0;
-  if ( v7 )
-  {
+  if (v7) {
     v30 = 0;
-    v35 = 16;
-    v36 = 0;
-    v34 = 0;
-    while ( 1 )
-    {
-      if ( !strcmp(v5, "-d") )
-      {
-        v14 = v6[1];
-        ++v6;
-        v12 = v14;
-        if ( !v14 )
+    bit_result = 16;
+    deviceval = 0;
+    card_result = 0;
+    while (1) {
+      if (!strcmp(v5, "-d")) {
+        device = iter_argv[1];
+        ++iter_argv;
+        argv_arr = device;
+        if (!device)
           goto LABEL_34;
-        v36 = atoi(v12);
-      }
-      else if ( !strcmp(v5, "-c") )
-      {
-        v15 = v6[1];
-        ++v6;
-        v12 = v15;
-        if ( !v15 )
+        deviceval = atoi(argv_arr);
+      } else if (!strcmp(v5, "-c")) {
+        channel_val = iter_argv[1];
+        ++iter_argv;
+        argv_arr = channel_val;
+        if (!channel_val)
           goto LABEL_34;
-        v8 = atoi(v12);
-      }
-      else if ( !strcmp(v5, "-r") )
-      {
-        v16 = v6[1];
-        ++v6;
-        v12 = v16;
-        if ( !v16 )
+        channels = atoi(argv_arr);
+      } else if (!strcmp(v5, "-r")) {
+        rate_val = iter_argv[1];
+        ++iter_argv;
+        argv_arr = rate_val;
+        if (!rate_val)
           goto LABEL_34;
-        v9 = atoi(v12);
-      }
-      else if ( !strcmp(v5, "-b") )
-      {
-        v17 = v6[1];
-        ++v6;
-        v12 = v17;
-        if ( !v17 )
+        rate = atoi(argv_arr);
+      } else if (!strcmp(v5, "-b")) {
+        bits_val = iter_argv[1];
+        ++iter_argv;
+        argv_arr = bits_val;
+        if (!bits_val)
           goto LABEL_34;
-        v35 = atoi(v12);
-      }
-      else if ( !strcmp(v5, "-D") )
-      {
-        v18 = v6[1];
-        ++v6;
-        v12 = v18;
-        if ( !v18 )
+        bit_result = atoi(argv_arr);
+      } else if (!strcmp(v5, "-D")) {
+        card_val = iter_argv[1];
+        ++iter_argv;
+        argv_arr = card_val;
+        if (!card_val)
           goto LABEL_34;
-        v34 = atoi(v12);
-      }
-      else if ( !strcmp(v5, "-p") )
-      {
-        v19 = v6[1];
-        ++v6;
-        v12 = v19;
-        if ( !v19 )
+        card_result = atoi(argv_arr);
+      } else if (!strcmp(v5, "-p")) {
+        period_size_val = iter_argv[1];
+        ++iter_argv;
+        argv_arr = period_size_val;
+        if (!period_size_val)
           goto LABEL_34;
-        v33 = atoi(v12);
-      }
-      else if ( !strcmp(v5, "-n") )
-      {
-        v20 = v6[1];
-        ++v6;
-        v12 = v20;
-        if ( !v20 )
+        period_size = atoi(argv_arr);
+      } else if (!strcmp(v5, "-n")) {
+        n_periods_val = iter_argv[1];
+        ++iter_argv;
+        argv_arr = n_periods_val;
+        if (!n_periods_val)
           goto LABEL_34;
-        v31 = atoi(v12);
-      }
-      else
-      {
-        if ( strcmp(v5, "-t") )
-        {
-          v10 = strcmp(v5, "-f");
+        n_periods = atoi(argv_arr);
+      } else {
+        if (strcmp(v5, "-t")) {           // time
+          f_flag_argv = strcmp(v5, "-f"); // f-flag?
           v11 = v10 == 0;
-          if ( !v10 )
-            ++v6;
-          v12 = *v6;
+          if (!f_flag_argv) // if no f flag; move to next argv
+            ++iter_argv;
+          argv_arr = *iter_argv;
           v13 = v32;
-          if ( v11 )
+          if (v11)
             v13 = 1;
           v32 = v13;
           goto LABEL_35;
         }
-        v21 = v6[1];
-        ++v6;
-        v12 = v21;
-        if ( !v21 )
-        {
-LABEL_34:
-          v12 = 0;
+        f_flag_result = iter_argv[1];
+        ++iter_argv;
+        argv_arr = f_flag_result;
+        if (!f_flag_result) {
+        LABEL_34:
+          argv_arr = 0;
           goto LABEL_35;
         }
-        v30 = atoi(v12);
+        v30 = atoi(argv_arr);
       }
-LABEL_35:
-      if ( v12 )
-        ++v6;
-      v5 = *v6;
-      if ( !*v6 )
+    LABEL_35:
+      if (argv_arr)
+        ++iter_argv;
+      v5 = *iter_argv;
+      if (!*iter_argv)
         goto LABEL_40;
     }
   }
   v30 = 0;
-  v35 = 16;
-  v36 = 0;
-  v34 = 0;
+  bit_result = 16;
+  deviceval = 0;
+  card_result = 0;
 LABEL_40:
   v37[0] = *(_QWORD *)"RIFF";
   v37[1] = 0x20746D6645564157LL;
   v38 = 16;
-  v22 = 1;
+  pcm_format = 1;
   v39 = 1;
   v40 = v8;
-  v41 = v9;
-  switch ( v35 )
-  {
-    case 16:
-      v22 = 0;
-      break;
-    case 32:
-      break;
-    case 24:
-      v22 = 4;
-      if ( !v32 )
-        v22 = 3;
-      break;
-    default:
-      fprintf(stderr, "%d bits is not supported.\n", v35);
-      return 1;
+  v41 = rate;
+  switch (bit_result) {
+  case 16:
+    pcm_format = 0;
+    break;
+  case 32:
+    break;
+  case 24:
+    pcm_format = 4;
+    if (!v32)
+      pcm_format = 3;
+    break;
+  default:
+    fprintf(stderr, "%d bits is not supported.\n", v35);
+    return 1;
   }
-  v23 = pcm_format_to_bits(v22);
-  v24 = v23 >> 3;
-  v44 = v23;
+  format_bits = pcm_format_to_bits(pcm_format);
+  v24 = format_bits >> 3;
+  v44 = format_bits;
   v25 = v24 * v8;
   v26 = 0;
-  v42 = v9 * v8 * v24;
+  v42 = rate * channels * v24;
   v43 = v24 * v8;
   v45 = 1635017060;
   fseek(stream, 44, 0);
   signal(2, (__sighandler_t)sub_B18);
-  v27 = sub_E80((int)stream, v34, v36, (unsigned __int16)v8, v9, v22, v33, v31, v30);
+  v27 = sub_E80((int)stream, v34, v36, (unsigned __int16)v8, v9, pcm_format,
+                v33, v31, v30);
   printf("Captured %d frames\n", v27);
   v46 = v25 * v27;
   HIDWORD(v37[0]) = v46 + 36;
@@ -376,46 +348,43 @@ LABEL_40:
   return v26;
 }
 // 8B4: using guessed type int __fastcall pcm_format_to_bits(_DWORD);
-// 8E4: using guessed type int __fastcall _fwrite_chk(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD);
+// 8E4: using guessed type int __fastcall _fwrite_chk(_DWORD, _DWORD, _DWORD,
+// _DWORD, _DWORD);
 
 //----- (00000E80) --------------------------------------------------------
-int __fastcall sub_E80(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9)
-{
-  int v11; // r0
-  int v12; // r9
-  int buffer_size; // r0
-  size_t v14; // r7
-  void *v15; // r6
-  unsigned int v16; // r10
-  int v17; // r0
-  unsigned int i; // r5
-  int v19; // r0
-  int v20; // r5
-  FILE *v22; // r5
+int __fastcall sub_E80(int a1, int a2, int a3, int a4, int a5, int a6, int a7,
+                       int a8, int a9) {
+  int v11;           // r0
+  int v12;           // r9
+  int buffer_size;   // r0
+  size_t v14;        // r7
+  void *v15;         // r6
+  unsigned int v16;  // r10
+  int v17;           // r0
+  unsigned int i;    // r5
+  int v19;           // r0
+  int v20;           // r5
+  FILE *v22;         // r5
   const char *error; // r0
 
   v11 = pcm_open(a2, a3, 0x10000000);
   v12 = v11;
-  if ( v11 && pcm_is_ready(v11) )
-  {
+  if (v11 && pcm_is_ready(v11)) {
     buffer_size = pcm_get_buffer_size(v12);
     v14 = pcm_frames_to_bytes(v12, buffer_size);
     v15 = malloc(v14);
-    if ( v15 )
-    {
-      if ( a9 )
+    if (v15) {
+      if (a9)
         v16 = pcm_frames_to_bytes(v12, a9 * a5) - 1;
       else
         v16 = -1;
       v17 = pcm_format_to_bits(a6);
       printf("Capturing sample: %u ch, %u hz, %u bit\n", a4, a5, v17);
-      for ( i = 0; dword_5000; i += v14 )
-      {
+      for (i = 0; dword_5000; i += v14) {
         v19 = pcm_read(v12, v15, v14);
-        if ( v16 < i || v19 )
+        if (v16 < i || v19)
           break;
-        if ( _fwrite_chk(v15, 1, v14, a1, -1) != v14 )
-        {
+        if (_fwrite_chk(v15, 1, v14, a1, -1) != v14) {
           _fwrite_chk("Error capturing sample\n", 23, 1, stderr, 24);
           break;
         }
@@ -423,16 +392,12 @@ int __fastcall sub_E80(int a1, int a2, int a3, int a4, int a5, int a6, int a7, i
       v20 = pcm_bytes_to_frames(v12, i);
       pcm_close(v12);
       free(v15);
-    }
-    else
-    {
+    } else {
       fprintf(stderr, "Unable to allocate %d bytes\n", v14);
       pcm_close(v12);
       return 0;
     }
-  }
-  else
-  {
+  } else {
     v22 = stderr;
     error = (const char *)pcm_get_error(v12);
     fprintf(v22, "Unable to open PCM device (%s)\n", error);
@@ -441,9 +406,9 @@ int __fastcall sub_E80(int a1, int a2, int a3, int a4, int a5, int a6, int a7, i
   return v20;
 }
 // 8B4: using guessed type int __fastcall pcm_format_to_bits(_DWORD);
-// 8E4: using guessed type int __fastcall _fwrite_chk(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD);
-// 914: using guessed type int __fastcall pcm_open(_DWORD, _DWORD, _DWORD);
-// 920: using guessed type int __fastcall pcm_is_ready(_DWORD);
+// 8E4: using guessed type int __fastcall _fwrite_chk(_DWORD, _DWORD, _DWORD,
+// _DWORD, _DWORD); 914: using guessed type int __fastcall pcm_open(_DWORD,
+// _DWORD, _DWORD); 920: using guessed type int __fastcall pcm_is_ready(_DWORD);
 // 92C: using guessed type int __fastcall pcm_get_buffer_size(_DWORD);
 // 938: using guessed type int __fastcall pcm_frames_to_bytes(_DWORD, _DWORD);
 // 950: using guessed type int __fastcall pcm_read(_DWORD, _DWORD, _DWORD);
@@ -453,18 +418,16 @@ int __fastcall sub_E80(int a1, int a2, int a3, int a4, int a5, int a6, int a7, i
 // 5000: using guessed type int dword_5000;
 
 //----- (00001020) --------------------------------------------------------
-unsigned int *__fastcall sub_1020(unsigned int *result, int *a2, int *a3)
-{
+unsigned int *__fastcall sub_1020(unsigned int *result, int *a2, int *a3) {
   unsigned int v3; // r3
   unsigned int v4; // t1
-  int v5; // r12
-  bool v6; // zf
-  int v7; // r3
-  int v8; // r12
+  int v5;          // r12
+  bool v6;         // zf
+  int v7;          // r3
+  int v8;          // r12
 
   v3 = *result;
-  if ( (*result & 0x80000000) == 0 )
-  {
+  if ((*result & 0x80000000) == 0) {
     *a2 = 1;
     v4 = result[1];
     ++result;
@@ -472,18 +435,15 @@ unsigned int *__fastcall sub_1020(unsigned int *result, int *a2, int *a3)
     return result;
   }
   v5 = HIBYTE(v3) & 0xF;
-  if ( v5 )
-  {
+  if (v5) {
     v6 = v5 == 3;
-    if ( v5 != 3 )
+    if (v5 != 3)
       v6 = v5 == 1;
-    if ( !v6 )
+    if (!v6)
       return 0;
     v7 = 4 * BYTE2(v3) + 4;
     v8 = 2;
-  }
-  else
-  {
+  } else {
     v8 = 1;
     v7 = 4;
   }
@@ -493,117 +453,108 @@ unsigned int *__fastcall sub_1020(unsigned int *result, int *a2, int *a3)
 }
 
 //----- (00001074) --------------------------------------------------------
-int __fastcall sub_1074(int a1, int a2, unsigned int a3, unsigned int a4)
-{
-  unsigned int v6; // r11
-  unsigned int v8; // r7
-  int v9; // r10
-  int v10; // r2
+int __fastcall sub_1074(int a1, int a2, unsigned int a3, unsigned int a4) {
+  unsigned int v6;  // r11
+  unsigned int v8;  // r7
+  int v9;           // r10
+  int v10;          // r2
   unsigned int v11; // r1
-  int result; // r0
-  int v13; // r3
-  int v14; // r2
-  int v15; // r0
-  int v16; // r1
-  int v17; // r2
-  int v18; // r1
-  int v19; // r6
-  int v20; // r2
-  int v21; // r0
-  int v22; // r1
-  int v23; // r3
-  int v24; // r0
-  int v25; // r0
+  int result;       // r0
+  int v13;          // r3
+  int v14;          // r2
+  int v15;          // r0
+  int v16;          // r1
+  int v17;          // r2
+  int v18;          // r1
+  int v19;          // r6
+  int v20;          // r2
+  int v21;          // r0
+  int v22;          // r1
+  int v23;          // r3
+  int v24;          // r0
+  int v25;          // r0
   unsigned int v32; // r1
   unsigned int v33; // r0
-  int v34; // r1
+  int v34;          // r1
   unsigned int v35; // r0
-  int v36; // [sp+0h] [bp-30h]
-  int v37; // [sp+4h] [bp-2Ch] BYREF
+  int v36;          // [sp+0h] [bp-30h]
+  int v37;          // [sp+4h] [bp-2Ch] BYREF
 
   v6 = a3;
-  if ( a3 >= a4 )
-  {
-LABEL_54:
+  if (a3 >= a4) {
+  LABEL_54:
     sub_1970(a1, 14, &v37);
     sub_199E(a1, 15, v37);
     return 8;
   }
   v36 = 0;
-  do
-  {
+  do {
     v8 = v6 + 1;
     v9 = *(unsigned __int8 *)(a2 + (v6 ^ 3));
-    if ( (v9 & 0x80) == 0 )
-    {
+    if ((v9 & 0x80) == 0) {
       sub_1970(a1, 13, &v37);
-      if ( (v9 & 0x40) != 0 )
+      if ((v9 & 0x40) != 0)
         v10 = -4 - (unsigned __int8)(4 * v9) + v37;
       else
         v10 = 4 * v9 + v37 + 4;
-LABEL_12:
+    LABEL_12:
       v37 = v10;
-LABEL_13:
+    LABEL_13:
       sub_199E(a1, 13, v10);
-LABEL_36:
+    LABEL_36:
       v6 = v8;
       continue;
     }
     v11 = v9 & 0xF0;
     result = 9;
-    if ( v11 > 0xAF )
-    {
-      if ( v11 == 176 )
-      {
+    if (v11 > 0xAF) {
+      if (v11 == 176) {
         result = 9;
         v18 = 0;
         v19 = 0;
-        switch ( *(_BYTE *)(a2 + (v6 ^ 3)) )
-        {
-          case 0xB0:
-            goto LABEL_53;
-          case 0xB1:
-            if ( v8 >= a4 )
-              return 9;
-            v20 = *(unsigned __int8 *)(a2 + (v8 ^ 3));
-            result = 9;
-            if ( !*(_BYTE *)(a2 + (v8 ^ 3)) || (v20 & 0xF0) != 0 )
-              return result;
-            v21 = a1;
-            v22 = 0;
-            v23 = 0;
-            goto LABEL_48;
-          case 0xB2:
-            break;
-          case 0xB3:
-            v23 = 1;
-            v25 = *(unsigned __int8 *)(a2 + (v8 ^ 3));
-            _R1 = v25 << 12;
-            __asm { UXTB16.W        R1, R1 }
-            v20 = ((v25 & 0xF) + 1) | _R1;
-            v21 = a1;
-            v22 = 1;
-            goto LABEL_48;
-          case 0xB4:
-          case 0xB5:
-          case 0xB6:
-          case 0xB7:
+        switch (*(_BYTE *)(a2 + (v6 ^ 3))) {
+        case 0xB0:
+          goto LABEL_53;
+        case 0xB1:
+          if (v8 >= a4)
+            return 9;
+          v20 = *(unsigned __int8 *)(a2 + (v8 ^ 3));
+          result = 9;
+          if (!*(_BYTE *)(a2 + (v8 ^ 3)) || (v20 & 0xF0) != 0)
             return result;
-          default:
-            v16 = 1;
-            v13 = 1;
-            v14 = ((v9 & 7) + 1) | 0x80000;
-            v15 = a1;
-            goto LABEL_35;
+          v21 = a1;
+          v22 = 0;
+          v23 = 0;
+          goto LABEL_48;
+        case 0xB2:
+          break;
+        case 0xB3:
+          v23 = 1;
+          v25 = *(unsigned __int8 *)(a2 + (v8 ^ 3));
+          _R1 = v25 << 12;
+          __asm { UXTB16.W        R1, R1 }
+          v20 = ((v25 & 0xF) + 1) | _R1;
+          v21 = a1;
+          v22 = 1;
+          goto LABEL_48;
+        case 0xB4:
+        case 0xB5:
+        case 0xB6:
+        case 0xB7:
+          return result;
+        default:
+          v16 = 1;
+          v13 = 1;
+          v14 = ((v9 & 7) + 1) | 0x80000;
+          v15 = a1;
+          goto LABEL_35;
         }
-        while ( v8 < a4 )
-        {
+        while (v8 < a4) {
           v24 = v8++ ^ 3;
           LOBYTE(v24) = *(_BYTE *)(a2 + v24);
           v19 |= (v24 & 0x7F) << v18;
           v18 += 7;
-          if ( (v24 & 0x80) == 0 )
-          {
+          if ((v24 & 0x80) == 0) {
             sub_1970(a1, 13, &v37);
             v10 = v37 + 4 * v19 + 516;
             goto LABEL_12;
@@ -611,383 +562,348 @@ LABEL_36:
         }
         return 9;
       }
-      if ( v11 != 192 )
-      {
-        if ( v11 != 208 )
+      if (v11 != 192) {
+        if (v11 != 208)
           return result;
-        if ( (v9 & 8) != 0 )
+        if ((v9 & 8) != 0)
           return 9;
         v16 = 1;
         v14 = ((v9 & 7) + 1) | 0x80000;
         v15 = a1;
-LABEL_34:
+      LABEL_34:
         v13 = 5;
         goto LABEL_35;
       }
-      switch ( *(_BYTE *)(a2 + (v6 ^ 3)) )
-      {
-        case 0xC0:
-        case 0xC1:
-        case 0xC2:
-        case 0xC3:
-        case 0xC4:
-        case 0xC5:
-          v16 = 3;
-          v14 = ((v9 & 7) + 1) | 0xA0000;
-          v15 = a1;
-          goto LABEL_34;
-        case 0xC6:
-          v35 = *(unsigned __int8 *)(a2 + (v8 ^ 3));
-          if ( (v35 & 0xF) + (v35 >> 4) > 0xF )
-            return 9;
-          v20 = ((v35 & 0xF) + 1) | (v35 >> 4 << 16);
-          v21 = a1;
-          v22 = 3;
-          break;
-        case 0xC7:
-          if ( !*(_BYTE *)(a2 + (v8 ^ 3)) || *(unsigned __int8 *)(a2 + (v8 ^ 3)) >= 0x10u )
-            return 9;
-          goto LABEL_49;
-        case 0xC8:
-        case 0xC9:
-          v32 = *(unsigned __int8 *)(a2 + (v8 ^ 3));
-          v33 = v32 >> 4;
-          if ( v9 == 200 )
-            v33 = (v32 >> 4) | 0x10;
-          v34 = v32 & 0xF;
-          if ( v33 + v34 > 0x1F )
-            return 9;
-          v20 = (v34 + 1) | (v33 << 16);
-          v21 = a1;
-          v22 = 1;
-          break;
-        default:
+      switch (*(_BYTE *)(a2 + (v6 ^ 3))) {
+      case 0xC0:
+      case 0xC1:
+      case 0xC2:
+      case 0xC3:
+      case 0xC4:
+      case 0xC5:
+        v16 = 3;
+        v14 = ((v9 & 7) + 1) | 0xA0000;
+        v15 = a1;
+        goto LABEL_34;
+      case 0xC6:
+        v35 = *(unsigned __int8 *)(a2 + (v8 ^ 3));
+        if ((v35 & 0xF) + (v35 >> 4) > 0xF)
           return 9;
+        v20 = ((v35 & 0xF) + 1) | (v35 >> 4 << 16);
+        v21 = a1;
+        v22 = 3;
+        break;
+      case 0xC7:
+        if (!*(_BYTE *)(a2 + (v8 ^ 3)) ||
+            *(unsigned __int8 *)(a2 + (v8 ^ 3)) >= 0x10u)
+          return 9;
+        goto LABEL_49;
+      case 0xC8:
+      case 0xC9:
+        v32 = *(unsigned __int8 *)(a2 + (v8 ^ 3));
+        v33 = v32 >> 4;
+        if (v9 == 200)
+          v33 = (v32 >> 4) | 0x10;
+        v34 = v32 & 0xF;
+        if (v33 + v34 > 0x1F)
+          return 9;
+        v20 = (v34 + 1) | (v33 << 16);
+        v21 = a1;
+        v22 = 1;
+        break;
+      default:
+        return 9;
       }
       v23 = 5;
-LABEL_48:
+    LABEL_48:
       sub_1454(v21, v22, v20, v23);
-    }
-    else
-    {
-      if ( v11 != 128 )
-      {
-        if ( v11 == 144 )
-        {
-          if ( (v9 & 0xD | 2) == 15 )
+    } else {
+      if (v11 != 128) {
+        if (v11 == 144) {
+          if ((v9 & 0xD | 2) == 15)
             return 9;
           sub_1970(a1, v9 & 0xF, &v37);
           v10 = v37;
           goto LABEL_13;
         }
-        if ( v11 != 160 )
+        if (v11 != 160)
           return result;
         v13 = 0;
         v14 = ((16 << ((v9 & 7) + 1)) - 16) | (v9 << 11) & 0x4000;
         v15 = a1;
         v16 = 0;
-LABEL_35:
+      LABEL_35:
         sub_1454(v15, v16, v14, v13);
         goto LABEL_36;
       }
-      if ( v8 >= a4 )
+      if (v8 >= a4)
         return 9;
-      v17 = (unsigned __int16)((_WORD)v9 << 12) | (16 * *(unsigned __int8 *)(a2 + (v8 ^ 3)));
-      if ( !v17 )
+      v17 = (unsigned __int16)((_WORD)v9 << 12) |
+            (16 * *(unsigned __int8 *)(a2 + (v8 ^ 3)));
+      if (!v17)
         return 9;
       sub_1454(a1, 0, v17, 0);
       v36 |= (unsigned __int16)(((_WORD)v9 << 12) & 0x8000) >> 15;
     }
-LABEL_49:
+  LABEL_49:
     v6 += 2;
-  }
-  while ( v6 < a4 );
+  } while (v6 < a4);
 LABEL_53:
-  if ( (v36 & 1) == 0 )
+  if ((v36 & 1) == 0)
     goto LABEL_54;
   return 8;
 }
 
 //----- (00001324) --------------------------------------------------------
-int __fastcall sub_1324(int a1, int a2, unsigned int a3, int a4, _QWORD *a5)
-{
+int __fastcall sub_1324(int a1, int a2, unsigned int a3, int a4, _QWORD *a5) {
   int result; // r0
-  int v8; // r0
-  int v9; // r1
-  int v10; // r1
+  int v8;     // r0
+  int v9;     // r1
+  int v10;    // r1
 
-  switch ( a2 )
-  {
-    case 0:
-      result = 2;
-      if ( a3 > 0xF || a4 )
-        return result;
-      v8 = a1;
-      v9 = a3;
-      goto LABEL_11;
-    case 1:
-      if ( a4 == 5 )
-      {
-        if ( a3 <= 0x1F )
-          goto LABEL_19;
-        return 2;
-      }
-      if ( a4 != 1 || a3 > 0xF )
-        return 2;
-      sub_1A80(a1);
-LABEL_19:
-      v10 = a3 + 256;
-LABEL_20:
-      result = sub_19E2(a1, v10, a5);
-LABEL_21:
-      if ( result )
-        return 2;
+  switch (a2) {
+  case 0:
+    result = 2;
+    if (a3 > 0xF || a4)
       return result;
-    case 3:
-      result = 2;
-      if ( a3 > 0x1F || a4 != 5 )
-        return result;
-      v10 = a3 + 112;
-      goto LABEL_20;
-    case 4:
-      result = 2;
-      if ( a3 > 3 || a4 )
-        return result;
-      v9 = a3 + 192;
-      v8 = a1;
-LABEL_11:
-      result = sub_1970(v8, v9, a5);
-      goto LABEL_21;
-    default:
-      sub_17D8(
-        "_Unwind_VRS_Result _Unwind_VRS_Get_Internal(_Unwind_Context *, _Unwind_VRS_RegClass, uint32_t, _Unwind_VRS_DataR"
-        "epresentation, void *)",
-        885,
-        "unsupported register class");
+    v8 = a1;
+    v9 = a3;
+    goto LABEL_11;
+  case 1:
+    if (a4 == 5) {
+      if (a3 <= 0x1F)
+        goto LABEL_19;
+      return 2;
+    }
+    if (a4 != 1 || a3 > 0xF)
+      return 2;
+    sub_1A80(a1);
+  LABEL_19:
+    v10 = a3 + 256;
+  LABEL_20:
+    result = sub_19E2(a1, v10, a5);
+  LABEL_21:
+    if (result)
+      return 2;
+    return result;
+  case 3:
+    result = 2;
+    if (a3 > 0x1F || a4 != 5)
+      return result;
+    v10 = a3 + 112;
+    goto LABEL_20;
+  case 4:
+    result = 2;
+    if (a3 > 3 || a4)
+      return result;
+    v9 = a3 + 192;
+    v8 = a1;
+  LABEL_11:
+    result = sub_1970(v8, v9, a5);
+    goto LABEL_21;
+  default:
+    sub_17D8("_Unwind_VRS_Result _Unwind_VRS_Get_Internal(_Unwind_Context *, "
+             "_Unwind_VRS_RegClass, uint32_t, _Unwind_VRS_DataR"
+             "epresentation, void *)",
+             885, "unsupported register class");
   }
 }
 
 //----- (000013B8) --------------------------------------------------------
-int __fastcall sub_13B8(int a1, int a2, unsigned int a3, int a4, int *a5)
-{
-  int result; // r0
-  int v8; // r2
-  int v9; // r0
-  int v10; // r1
+int __fastcall sub_13B8(int a1, int a2, unsigned int a3, int a4, int *a5) {
+  int result;  // r0
+  int v8;      // r2
+  int v9;      // r0
+  int v10;     // r1
   __int64 v11; // r2
-  int v12; // r1
+  int v12;     // r1
 
-  switch ( a2 )
-  {
-    case 0:
-      result = 2;
-      if ( a3 > 0xF || a4 )
-        return result;
-      v8 = *a5;
-      v9 = a1;
-      v10 = a3;
-      goto LABEL_11;
-    case 1:
-      if ( a4 == 5 )
-      {
-        if ( a3 <= 0x1F )
-          goto LABEL_19;
-        return 2;
-      }
-      if ( a4 != 1 || a3 > 0xF )
-        return 2;
-      sub_1A80(a1);
-LABEL_19:
-      v11 = *(_QWORD *)a5;
-      v12 = a3 + 256;
-LABEL_20:
-      result = sub_1A12(a1, v12, v11, SHIDWORD(v11));
-LABEL_21:
-      if ( result )
-        return 2;
+  switch (a2) {
+  case 0:
+    result = 2;
+    if (a3 > 0xF || a4)
       return result;
-    case 3:
-      result = 2;
-      if ( a3 > 0x1F || a4 != 5 )
-        return result;
-      v11 = *(_QWORD *)a5;
-      v12 = a3 + 112;
-      goto LABEL_20;
-    case 4:
-      result = 2;
-      if ( a3 > 3 || a4 )
-        return result;
-      v8 = *a5;
-      v10 = a3 + 192;
-      v9 = a1;
-LABEL_11:
-      result = sub_199E(v9, v10, v8);
-      goto LABEL_21;
-    default:
-      sub_17D8(
-        "_Unwind_VRS_Result _Unwind_VRS_Set(_Unwind_Context *, _Unwind_VRS_RegClass, uint32_t, _Unwind_VRS_DataRepresentation, void *)",
-        837,
-        "unsupported register class");
+    v8 = *a5;
+    v9 = a1;
+    v10 = a3;
+    goto LABEL_11;
+  case 1:
+    if (a4 == 5) {
+      if (a3 <= 0x1F)
+        goto LABEL_19;
+      return 2;
+    }
+    if (a4 != 1 || a3 > 0xF)
+      return 2;
+    sub_1A80(a1);
+  LABEL_19:
+    v11 = *(_QWORD *)a5;
+    v12 = a3 + 256;
+  LABEL_20:
+    result = sub_1A12(a1, v12, v11, SHIDWORD(v11));
+  LABEL_21:
+    if (result)
+      return 2;
+    return result;
+  case 3:
+    result = 2;
+    if (a3 > 0x1F || a4 != 5)
+      return result;
+    v11 = *(_QWORD *)a5;
+    v12 = a3 + 112;
+    goto LABEL_20;
+  case 4:
+    result = 2;
+    if (a3 > 3 || a4)
+      return result;
+    v8 = *a5;
+    v10 = a3 + 192;
+    v9 = a1;
+  LABEL_11:
+    result = sub_199E(v9, v10, v8);
+    goto LABEL_21;
+  default:
+    sub_17D8("_Unwind_VRS_Result _Unwind_VRS_Set(_Unwind_Context *, "
+             "_Unwind_VRS_RegClass, uint32_t, _Unwind_VRS_DataRepresentation, "
+             "void *)",
+             837, "unsupported register class");
   }
 }
 
 //----- (00001454) --------------------------------------------------------
-int __fastcall sub_1454(int a1, int a2, unsigned int a3, int a4)
-{
-  char v8; // r4
-  unsigned int i; // r7
-  int *v10; // r0
-  int result; // r0
+int __fastcall sub_1454(int a1, int a2, unsigned int a3, int a4) {
+  char v8;          // r4
+  unsigned int i;   // r7
+  int *v10;         // r0
+  int result;       // r0
   unsigned int v12; // r4
   unsigned int v13; // r6
-  int *v14; // r0
-  int v15; // r2
-  int v16; // r0
-  int v17; // r2
-  int v18[2]; // [sp+8h] [bp-30h] BYREF
-  int *v19; // [sp+10h] [bp-28h] BYREF
+  int *v14;         // r0
+  int v15;          // r2
+  int v16;          // r0
+  int v17;          // r2
+  int v18[2];       // [sp+8h] [bp-30h] BYREF
+  int *v19;         // [sp+10h] [bp-28h] BYREF
 
-  switch ( a2 )
-  {
-    case 0:
-    case 4:
-      if ( a4 || sub_1970(a1, 13, v18) )
-        return 2;
-      v8 = 0;
-      for ( i = 0; i < 0x10; ++i )
-      {
-        if ( ((1 << i) & a3) != 0 )
-        {
-          v10 = (int *)v18[0];
-          v18[0] += 4;
-          v19 = (int *)*v10;
-          if ( sub_13B8(a1, a2, i, 0, (int *)&v19) )
-            return 2;
-          v8 |= a2 == 0 && i == 13;
-        }
+  switch (a2) {
+  case 0:
+  case 4:
+    if (a4 || sub_1970(a1, 13, v18))
+      return 2;
+    v8 = 0;
+    for (i = 0; i < 0x10; ++i) {
+      if (((1 << i) & a3) != 0) {
+        v10 = (int *)v18[0];
+        v18[0] += 4;
+        v19 = (int *)*v10;
+        if (sub_13B8(a1, a2, i, 0, (int *)&v19))
+          return 2;
+        v8 |= a2 == 0 && i == 13;
       }
-      if ( (v8 & 1) != 0 )
-        return 0;
-      v17 = v18[0];
-      goto LABEL_22;
-    case 1:
-    case 3:
-      if ( (a4 | 4) != 5 || sub_1970(a1, 13, &v19) )
-        return 2;
-      if ( !(_WORD)a3 )
-        goto LABEL_17;
-      v12 = HIWORD(a3);
-      v13 = HIWORD(a3) + (unsigned __int16)a3;
-      break;
-    default:
-      sub_17D8(
-        "_Unwind_VRS_Result _Unwind_VRS_Pop(_Unwind_Context *, _Unwind_VRS_RegClass, uint32_t, _Unwind_VRS_DataRepresentation)",
-        971,
-        "unsupported register class");
+    }
+    if ((v8 & 1) != 0)
+      return 0;
+    v17 = v18[0];
+    goto LABEL_22;
+  case 1:
+  case 3:
+    if ((a4 | 4) != 5 || sub_1970(a1, 13, &v19))
+      return 2;
+    if (!(_WORD)a3)
+      goto LABEL_17;
+    v12 = HIWORD(a3);
+    v13 = HIWORD(a3) + (unsigned __int16)a3;
+    break;
+  default:
+    sub_17D8("_Unwind_VRS_Result _Unwind_VRS_Pop(_Unwind_Context *, "
+             "_Unwind_VRS_RegClass, uint32_t, _Unwind_VRS_DataRepresentation)",
+             971, "unsupported register class");
   }
-  do
-  {
+  do {
     v14 = v19++;
     v15 = *v14;
     v19 = v14 + 2;
     v16 = v14[1];
     v18[0] = v15;
     v18[1] = v16;
-    if ( sub_13B8(a1, a2, v12, a4, v18) )
+    if (sub_13B8(a1, a2, v12, a4, v18))
       return 2;
     ++v12;
-  }
-  while ( v12 < v13 );
+  } while (v12 < v13);
 LABEL_17:
-  if ( a4 == 1 )
+  if (a4 == 1)
     v17 = (int)++v19;
   else
     v17 = (int)v19;
 LABEL_22:
   result = sub_199E(a1, 13, v17);
-  if ( result )
+  if (result)
     return 2;
   return result;
 }
 
 //----- (00001594) --------------------------------------------------------
-int __fastcall sub_1594(int a1, int a2, int a3)
-{
-  return sub_159C(a2, a3);
-}
+int __fastcall sub_1594(int a1, int a2, int a3) { return sub_159C(a2, a3); }
 
 //----- (0000159C) --------------------------------------------------------
-int __fastcall sub_159C(int a1, int a2)
-{
+int __fastcall sub_159C(int a1, int a2) {
   int result; // r0
-  int v5; // r1
+  int v5;     // r1
   char v6[8]; // [sp+4h] [bp-3Ch] BYREF
   _DWORD *v7; // [sp+Ch] [bp-34h]
 
   sub_1A50(a2, (int)v6);
-  if ( (*(_BYTE *)(a1 + 80) & 1) == 0 && *v7 )
+  if ((*(_BYTE *)(a1 + 80) & 1) == 0 && *v7)
     return 9;
   v5 = sub_1A4A(a2);
   result = 9;
-  if ( v5 == 1 )
+  if (v5 == 1)
     return 8;
   return result;
 }
 // 159C: using guessed type char var_3C[8];
 
 //----- (000015F8) --------------------------------------------------------
-int __fastcall sub_15F8(int a1, int a2, int a3)
-{
-  return sub_159C(a2, a3);
-}
+int __fastcall sub_15F8(int a1, int a2, int a3) { return sub_159C(a2, a3); }
 
 //----- (00001600) --------------------------------------------------------
-int __fastcall sub_1600(int a1, int a2, int a3)
-{
-  return sub_159C(a2, a3);
-}
+int __fastcall sub_1600(int a1, int a2, int a3) { return sub_159C(a2, a3); }
 
 //----- (00001608) --------------------------------------------------------
-int __fastcall sub_1608(int *a1, int a2, int a3, int a4)
-{
-  int v5; // r5
-  int (__fastcall *v6)(_DWORD, int *, char *); // r3
-  int v7; // r0
-  int v9[3]; // [sp+0h] [bp-8A0h] BYREF
-  int (__fastcall *v10)(_DWORD, int *, char *); // [sp+Ch] [bp-894h]
-  int v11; // [sp+14h] [bp-88Ch]
-  int v12; // [sp+20h] [bp-880h]
-  _DWORD v13[256]; // [sp+28h] [bp-878h] BYREF
-  char v14[1120]; // [sp+428h] [bp-478h] BYREF
+int __fastcall sub_1608(int *a1, int a2, int a3, int a4) {
+  int v5;                                       // r5
+  int(__fastcall * v6)(_DWORD, int *, char *);  // r3
+  int v7;                                       // r0
+  int v9[3];                                    // [sp+0h] [bp-8A0h] BYREF
+  int(__fastcall * v10)(_DWORD, int *, char *); // [sp+Ch] [bp-894h]
+  int v11;                                      // [sp+14h] [bp-88Ch]
+  int v12;                                      // [sp+20h] [bp-880h]
+  _DWORD v13[256];                              // [sp+28h] [bp-878h] BYREF
+  char v14[1120];                               // [sp+428h] [bp-478h] BYREF
 
   sub_18A4(v13, a2, a3, a4, v9[0]);
   a1[3] = 0;
   sub_192C((int)v14, v13);
-  if ( sub_1A50((int)v14, (int)v9) )
+  if (sub_1A50((int)v14, (int)v9))
     return 3;
   v5 = 3;
-  while ( 1 )
-  {
+  while (1) {
     v6 = v10;
-    if ( v10 )
-    {
+    if (v10) {
       a1[18] = v9[0];
       a1[19] = v12;
       a1[20] = v11;
       v7 = v6(0, a1, v14);
-      if ( v7 != 8 )
+      if (v7 != 8)
         break;
     }
-    if ( sub_1A50((int)v14, (int)v9) )
+    if (sub_1A50((int)v14, (int)v9))
       return 3;
   }
-  if ( v7 == 6 )
-  {
+  if (v7 == 6) {
     sub_16B4(v13, a1, 0);
     return 2;
-  }
-  else if ( v7 == 9 )
-  {
+  } else if (v7 == 9) {
     return 9;
   }
   return v5;
@@ -995,62 +911,56 @@ int __fastcall sub_1608(int *a1, int a2, int a3, int a4)
 // 1608: using guessed type _DWORD var_878[256];
 
 //----- (000016B4) --------------------------------------------------------
-int __fastcall sub_16B4(const void *a1, int *a2, char a3)
-{
-  int i; // r6
-  int v6; // r7
-  int (__fastcall *v7)(int, int *, char *); // r3
-  int v8; // r0
-  int v10; // [sp+0h] [bp-4B8h] BYREF
-  int v11[3]; // [sp+4h] [bp-4B4h] BYREF
-  int (__fastcall *v12)(int, int *, char *); // [sp+10h] [bp-4A8h]
-  int v13; // [sp+18h] [bp-4A0h]
-  int v14; // [sp+24h] [bp-494h]
-  int v15; // [sp+2Ch] [bp-48Ch] BYREF
-  char v16[1124]; // [sp+30h] [bp-488h] BYREF
-  int v17; // [sp+494h] [bp-24h]
+int __fastcall sub_16B4(const void *a1, int *a2, char a3) {
+  int i;                                     // r6
+  int v6;                                    // r7
+  int(__fastcall * v7)(int, int *, char *);  // r3
+  int v8;                                    // r0
+  int v10;                                   // [sp+0h] [bp-4B8h] BYREF
+  int v11[3];                                // [sp+4h] [bp-4B4h] BYREF
+  int(__fastcall * v12)(int, int *, char *); // [sp+10h] [bp-4A8h]
+  int v13;                                   // [sp+18h] [bp-4A0h]
+  int v14;                                   // [sp+24h] [bp-494h]
+  int v15;                                   // [sp+2Ch] [bp-48Ch] BYREF
+  char v16[1124];                            // [sp+30h] [bp-488h] BYREF
+  int v17;                                   // [sp+494h] [bp-24h]
 
   sub_192C((int)v16, a1);
-  for ( i = 1; ; --i )
-  {
+  for (i = 1;; --i) {
     v6 = 1;
-    if ( (a3 & 1) != 0 )
-    {
+    if ((a3 & 1) != 0) {
       v6 = 2;
-      if ( !i )
-      {
+      if (!i) {
         sub_199E((int)v16, -1, a2[4]);
         a3 = 0;
       }
     }
     sub_1970((int)v16, -2, &v15);
-    if ( sub_1A50((int)v16, (int)v11) )
+    if (sub_1A50((int)v16, (int)v11))
       break;
     v7 = v12;
-    if ( v12 )
-    {
+    if (v12) {
       a2[18] = v11[0];
       a2[19] = v14;
       a2[20] = v13;
       v8 = v7(v6, a2, v16);
-      if ( v8 == 7 )
-      {
+      if (v8 == 7) {
         sub_1970((int)v16, -1, &v10);
         a2[4] = v10;
         sub_1A6E((int)v16);
         return _stack_chk_guard - v17;
       }
-      if ( v8 != 8 )
-      {
-        if ( v8 == 9 )
+      if (v8 != 8) {
+        if (v8 == 9)
           abort();
         return _stack_chk_guard - v17;
       }
-      if ( v15 == a2[8] )
-        sub_17D8(
-          "_Unwind_Reason_Code unwind_phase2(unw_context_t *, _Unwind_Exception *, bool)",
-          653,
-          "during phase1 personality function said it would stop here, but now in phase2 it did not stop here");
+      if (v15 == a2[8])
+        sub_17D8("_Unwind_Reason_Code unwind_phase2(unw_context_t *, "
+                 "_Unwind_Exception *, bool)",
+                 653,
+                 "during phase1 personality function said it would stop here, "
+                 "but now in phase2 it did not stop here");
     }
   }
   return _stack_chk_guard - v17;
@@ -1058,74 +968,70 @@ int __fastcall sub_16B4(const void *a1, int *a2, char a3)
 // 16B4: using guessed type int var_4B4[3];
 
 //----- (000017A4) --------------------------------------------------------
-void __fastcall __noreturn sub_17A4(int *a1, int a2, int a3, int a4)
-{
+void __fastcall __noreturn sub_17A4(int *a1, int a2, int a3, int a4) {
   int v5[260]; // [sp+0h] [bp-410h] BYREF
 
   sub_18A4(v5, a2, a3, a4, v5[0]);
   sub_16B4(v5, a1, 1);
-  sub_17D8("void _Unwind_Resume(_Unwind_Exception *)", 753, "_Unwind_Resume() can't return");
+  sub_17D8("void _Unwind_Resume(_Unwind_Exception *)", 753,
+           "_Unwind_Resume() can't return");
 }
 
 //----- (000017D8) --------------------------------------------------------
-void __fastcall __noreturn sub_17D8(const char *a1, int a2, const char *a3)
-{
-  fprintf(stderr, "libunwind: %s %s:%d - %s\n", a1, "external/libunwind_llvm/src/Unwind-EHABI.cpp", a2, a3);
+void __fastcall __noreturn sub_17D8(const char *a1, int a2, const char *a3) {
+  fprintf(stderr, "libunwind: %s %s:%d - %s\n", a1,
+          "external/libunwind_llvm/src/Unwind-EHABI.cpp", a2, a3);
   abort();
 }
 
 //----- (0000180C) --------------------------------------------------------
-int __fastcall sub_180C(int a1)
-{
-  bool v1; // zf
+int __fastcall sub_180C(int a1) {
+  bool v1;    // zf
   int result; // r0
   char v3[8]; // [sp+4h] [bp-34h] BYREF
-  int v4; // [sp+Ch] [bp-2Ch]
+  int v4;     // [sp+Ch] [bp-2Ch]
 
   v1 = sub_1A50(a1, (int)v3) == 0;
   result = v4;
-  if ( !v1 )
+  if (!v1)
     return 0;
   return result;
 }
 // 180C: using guessed type char var_34[8];
 
 //----- (00001848) --------------------------------------------------------
-int __fastcall sub_1848(int a1)
-{
-  bool v1; // zf
+int __fastcall sub_1848(int a1) {
+  bool v1;    // zf
   int result; // r0
   int v3[10]; // [sp+4h] [bp-34h] BYREF
 
   v1 = sub_1A50(a1, (int)v3) == 0;
   result = v3[0];
-  if ( !v1 )
+  if (!v1)
     return 0;
   return result;
 }
 // 1848: using guessed type int var_34[10];
 
 //----- (00001890) --------------------------------------------------------
-int __fastcall sub_1890(int a1, int a2)
-{
+int __fastcall sub_1890(int a1, int a2) {
   int v2; // r0
   int v3; // r1
 
   v2 = sub_1A4A(a2);
   v3 = 9;
-  if ( v2 == 1 )
+  if (v2 == 1)
     return 0;
   return v3;
 }
 
 //----- (000018A4) --------------------------------------------------------
-int __fastcall sub_18A4(_DWORD *a1, int a2, int a3, int a4, int a5)
-{
-  int v5; // r4
-  int v6; // r5
-  int v7; // r6
-  int v8; // r7
-  int v9; // r8
+int __fastcall sub_18A4(_DWORD *a1, int a2, int a3, int a4, int a5) {
+  int v5;  // r4
+  int v6;  // r5
+  int v7;  // r6
+  int v8;  // r7
+  int v9;  // r8
   int v10; // r9
   int v11; // r10
   int v12; // r11
@@ -1162,17 +1068,16 @@ int __fastcall sub_18A4(_DWORD *a1, int a2, int a3, int a4, int a5)
 // 18AC: variable 'v14' is possibly undefined
 
 //----- (000018BC) --------------------------------------------------------
-_QWORD *__fastcall sub_18BC(_QWORD *result)
-{
-  __int64 v1; // d0
-  __int64 v2; // d1
-  __int64 v3; // d2
-  __int64 v4; // d3
-  __int64 v5; // d4
-  __int64 v6; // d5
-  __int64 v7; // d6
-  __int64 v8; // d7
-  __int64 v9; // d8
+_QWORD *__fastcall sub_18BC(_QWORD *result) {
+  __int64 v1;  // d0
+  __int64 v2;  // d1
+  __int64 v3;  // d2
+  __int64 v4;  // d3
+  __int64 v5;  // d4
+  __int64 v6;  // d5
+  __int64 v7;  // d6
+  __int64 v8;  // d7
+  __int64 v9;  // d8
   __int64 v10; // d9
   __int64 v11; // d10
   __int64 v12; // d11
@@ -1217,17 +1122,16 @@ _QWORD *__fastcall sub_18BC(_QWORD *result)
 // 18BC: variable 'v16' is possibly undefined
 
 //----- (000018C4) --------------------------------------------------------
-_QWORD *__fastcall sub_18C4(_QWORD *result)
-{
-  __int64 v1; // d0
-  __int64 v2; // d1
-  __int64 v3; // d2
-  __int64 v4; // d3
-  __int64 v5; // d4
-  __int64 v6; // d5
-  __int64 v7; // d6
-  __int64 v8; // d7
-  __int64 v9; // d8
+_QWORD *__fastcall sub_18C4(_QWORD *result) {
+  __int64 v1;  // d0
+  __int64 v2;  // d1
+  __int64 v3;  // d2
+  __int64 v4;  // d3
+  __int64 v5;  // d4
+  __int64 v6;  // d5
+  __int64 v7;  // d6
+  __int64 v8;  // d7
+  __int64 v9;  // d8
   __int64 v10; // d9
   __int64 v11; // d10
   __int64 v12; // d11
@@ -1272,17 +1176,16 @@ _QWORD *__fastcall sub_18C4(_QWORD *result)
 // 18C4: variable 'v16' is possibly undefined
 
 //----- (000018CC) --------------------------------------------------------
-_QWORD *__fastcall sub_18CC(_QWORD *result)
-{
-  __int64 v1; // d16
-  __int64 v2; // d17
-  __int64 v3; // d18
-  __int64 v4; // d19
-  __int64 v5; // d20
-  __int64 v6; // d21
-  __int64 v7; // d22
-  __int64 v8; // d23
-  __int64 v9; // d24
+_QWORD *__fastcall sub_18CC(_QWORD *result) {
+  __int64 v1;  // d16
+  __int64 v2;  // d17
+  __int64 v3;  // d18
+  __int64 v4;  // d19
+  __int64 v5;  // d20
+  __int64 v6;  // d21
+  __int64 v7;  // d22
+  __int64 v8;  // d23
+  __int64 v9;  // d24
   __int64 v10; // d25
   __int64 v11; // d26
   __int64 v12; // d27
@@ -1327,8 +1230,7 @@ _QWORD *__fastcall sub_18CC(_QWORD *result)
 // 18CC: variable 'v16' is possibly undefined
 
 //----- (000018D4) --------------------------------------------------------
-void sub_18D4()
-{
+void sub_18D4() {
   __asm
   {
     STCL            p1, c0, [R0],#8
@@ -1351,8 +1253,7 @@ void sub_18D4()
 }
 
 //----- (00001918) --------------------------------------------------------
-void sub_1918()
-{
+void sub_1918() {
   __asm
   {
     STC2            p1, c8, [R0],#4
@@ -1363,8 +1264,7 @@ void sub_1918()
 }
 
 //----- (0000192C) --------------------------------------------------------
-int __fastcall sub_192C(int a1, const void *a2)
-{
+int __fastcall sub_192C(int a1, const void *a2) {
   *(_DWORD *)a1 = &off_4DE0;
   *(_DWORD *)(a1 + 4) = &unk_5008;
   *(_BYTE *)(a1 + 76) = 0;
@@ -1377,187 +1277,158 @@ int __fastcall sub_192C(int a1, const void *a2)
 // 4DE0: using guessed type void *;
 
 //----- (00001970) --------------------------------------------------------
-int __fastcall sub_1970(int a1, int a2, _DWORD *a3)
-{
-  if ( (*(int (__fastcall **)(int))(*(_DWORD *)a1 + 8))(a1) != 1 )
+int __fastcall sub_1970(int a1, int a2, _DWORD *a3) {
+  if ((*(int(__fastcall **)(int))(*(_DWORD *)a1 + 8))(a1) != 1)
     return -6542;
-  *a3 = (*(int (__fastcall **)(int, int))(*(_DWORD *)a1 + 12))(a1, a2);
+  *a3 = (*(int(__fastcall **)(int, int))(*(_DWORD *)a1 + 12))(a1, a2);
   return 0;
 }
 
 //----- (0000199E) --------------------------------------------------------
-int __fastcall sub_199E(int a1, int a2, int a3)
-{
+int __fastcall sub_199E(int a1, int a2, int a3) {
   int v6; // r5
 
-  if ( (*(int (__fastcall **)(int))(*(_DWORD *)a1 + 8))(a1) != 1 )
+  if ((*(int(__fastcall **)(int))(*(_DWORD *)a1 + 8))(a1) != 1)
     return -6542;
-  (*(void (__fastcall **)(int, int, int))(*(_DWORD *)a1 + 16))(a1, a2, a3);
-  if ( a2 != -1 )
+  (*(void(__fastcall **)(int, int, int))(*(_DWORD *)a1 + 16))(a1, a2, a3);
+  if (a2 != -1)
     return 0;
   v6 = 0;
-  (*(void (__fastcall **)(int, _DWORD))(*(_DWORD *)a1 + 52))(a1, 0);
+  (*(void(__fastcall **)(int, _DWORD))(*(_DWORD *)a1 + 52))(a1, 0);
   return v6;
 }
 
 //----- (000019E2) --------------------------------------------------------
-int __fastcall sub_19E2(int a1, int a2, _QWORD *a3)
-{
-  if ( (*(int (__fastcall **)(int))(*(_DWORD *)a1 + 20))(a1) != 1 )
+int __fastcall sub_19E2(int a1, int a2, _QWORD *a3) {
+  if ((*(int(__fastcall **)(int))(*(_DWORD *)a1 + 20))(a1) != 1)
     return -6542;
-  *a3 = ((__int64 (__fastcall *)(int, int))*(_DWORD *)(*(_DWORD *)a1 + 24))(a1, a2);
+  *a3 = ((__int64(__fastcall *)(int, int)) *
+         (_DWORD *)(*(_DWORD *)a1 + 24))(a1, a2);
   return 0;
 }
 
 //----- (00001A12) --------------------------------------------------------
-int __fastcall sub_1A12(int a1, int a2, int a3, int a4)
-{
-  if ( (*(int (__fastcall **)(int))(*(_DWORD *)a1 + 20))(a1) != 1 )
+int __fastcall sub_1A12(int a1, int a2, int a3, int a4) {
+  if ((*(int(__fastcall **)(int))(*(_DWORD *)a1 + 20))(a1) != 1)
     return -6542;
-  (*(void (__fastcall **)(int, int, int, int))(*(_DWORD *)a1 + 28))(a1, a2, a3, a4);
+  (*(void(__fastcall **)(int, int, int, int))(*(_DWORD *)a1 + 28))(a1, a2, a3,
+                                                                   a4);
   return 0;
 }
 
 //----- (00001A4A) --------------------------------------------------------
-int __fastcall sub_1A4A(int a1)
-{
-  return (*(int (__fastcall **)(int))(*(_DWORD *)a1 + 32))(a1);
+int __fastcall sub_1A4A(int a1) {
+  return (*(int(__fastcall **)(int))(*(_DWORD *)a1 + 32))(a1);
 }
 
 //----- (00001A50) --------------------------------------------------------
-int __fastcall sub_1A50(int a1, int a2)
-{
+int __fastcall sub_1A50(int a1, int a2) {
   int result; // r0
 
-  (*(void (__fastcall **)(int, int))(*(_DWORD *)a1 + 36))(a1, a2);
+  (*(void(__fastcall **)(int, int))(*(_DWORD *)a1 + 36))(a1, a2);
   result = 0;
-  if ( !*(_DWORD *)(a2 + 4) )
+  if (!*(_DWORD *)(a2 + 4))
     return -6549;
   return result;
 }
 
 //----- (00001A6E) --------------------------------------------------------
-int __fastcall sub_1A6E(int a1)
-{
-  (*(void (__fastcall **)(int))(*(_DWORD *)a1 + 40))(a1);
+int __fastcall sub_1A6E(int a1) {
+  (*(void(__fastcall **)(int))(*(_DWORD *)a1 + 40))(a1);
   return -6540;
 }
 
 //----- (00001A80) --------------------------------------------------------
-int __fastcall sub_1A80(int a1)
-{
-  return (*(int (__fastcall **)(int))(*(_DWORD *)a1 + 60))(a1);
+int __fastcall sub_1A80(int a1) {
+  return (*(int(__fastcall **)(int))(*(_DWORD *)a1 + 60))(a1);
 }
 
 //----- (00001A86) --------------------------------------------------------
-bool __fastcall sub_1A86(int a1, int a2)
-{
+bool __fastcall sub_1A86(int a1, int a2) {
   return (a2 & 0xFFFFFFFC) == 192 || (unsigned int)(a2 - 16) > 0xFFFFFFED;
 }
 
 //----- (00001AA8) --------------------------------------------------------
-int __fastcall sub_1AA8(int a1, int a2)
-{
+int __fastcall sub_1AA8(int a1, int a2) {
   int v4; // r0
 
-  if ( a2 > 12 )
-  {
-    if ( a2 != 15 )
-    {
-      if ( a2 == 14 )
-      {
+  if (a2 > 12) {
+    if (a2 != 15) {
+      if (a2 == 14) {
         v4 = a1 + 64;
         return *(_DWORD *)v4;
       }
-      if ( a2 != 13 )
+      if (a2 != 13)
         goto LABEL_11;
-LABEL_9:
+    LABEL_9:
       v4 = a1 + 60;
       return *(_DWORD *)v4;
     }
     goto LABEL_8;
   }
-  if ( a2 == -2 )
+  if (a2 == -2)
     goto LABEL_9;
-  if ( a2 == -1 )
-  {
-LABEL_8:
+  if (a2 == -1) {
+  LABEL_8:
     v4 = a1 + 68;
     return *(_DWORD *)v4;
   }
 LABEL_11:
-  if ( (unsigned int)a2 > 0xC )
-  {
-    if ( (a2 & 0xFFFFFFFC) != 192 )
-      sub_1EC4(
-        "uint32_t libunwind::Registers_arm::getRegister(int)",
-        "external/libunwind_llvm/src/Registers.hpp",
-        1452,
-        "unsupported arm register");
-    if ( !*(_BYTE *)(a1 + 76) )
-    {
+  if ((unsigned int)a2 > 0xC) {
+    if ((a2 & 0xFFFFFFFC) != 192)
+      sub_1EC4("uint32_t libunwind::Registers_arm::getRegister(int)",
+               "external/libunwind_llvm/src/Registers.hpp", 1452,
+               "unsupported arm register");
+    if (!*(_BYTE *)(a1 + 76)) {
       *(_BYTE *)(a1 + 76) = 1;
       sub_1918();
     }
     v4 = a1 + 4 * a2 - 296;
-  }
-  else
-  {
+  } else {
     v4 = a1 + 4 * a2 + 8;
   }
   return *(_DWORD *)v4;
 }
 
 //----- (00001B34) --------------------------------------------------------
-int __fastcall sub_1B34(int result, int a2, int a3)
-{
+int __fastcall sub_1B34(int result, int a2, int a3) {
   int v5; // r5
 
   v5 = result;
-  if ( a2 > 12 )
-  {
-    if ( a2 != 15 )
-    {
-      if ( a2 == 14 )
-      {
+  if (a2 > 12) {
+    if (a2 != 15) {
+      if (a2 == 14) {
         *(_DWORD *)(result + 64) = a3;
         return result;
       }
-      if ( a2 != 13 )
+      if (a2 != 13)
         goto LABEL_11;
-LABEL_10:
+    LABEL_10:
       *(_DWORD *)(result + 60) = a3;
       return result;
     }
     goto LABEL_9;
   }
-  if ( a2 == -2 )
+  if (a2 == -2)
     goto LABEL_10;
-  if ( a2 == -1 )
-  {
-LABEL_9:
+  if (a2 == -1) {
+  LABEL_9:
     *(_DWORD *)(result + 68) = a3;
     return result;
   }
 LABEL_11:
-  if ( (unsigned int)a2 > 0xC )
-  {
-    if ( (a2 & 0xFFFFFFFC) != 192 )
-      sub_1EC4(
-        "void libunwind::Registers_arm::setRegister(int, uint32_t)",
-        "external/libunwind_llvm/src/Registers.hpp",
-        1471,
-        "unsupported arm register");
-    if ( !*(_BYTE *)(result + 76) )
-    {
+  if ((unsigned int)a2 > 0xC) {
+    if ((a2 & 0xFFFFFFFC) != 192)
+      sub_1EC4("void libunwind::Registers_arm::setRegister(int, uint32_t)",
+               "external/libunwind_llvm/src/Registers.hpp", 1471,
+               "unsupported arm register");
+    if (!*(_BYTE *)(result + 76)) {
       *(_BYTE *)(result + 76) = 1;
       sub_1918();
     }
     result = v5 + 4 * a2;
     *(_DWORD *)(result - 296) = a3;
-  }
-  else
-  {
+  } else {
     result += 4 * a2;
     *(_DWORD *)(result + 8) = a3;
   }
@@ -1565,50 +1436,38 @@ LABEL_11:
 }
 
 //----- (00001BC0) --------------------------------------------------------
-bool __fastcall sub_1BC0(int a1, int a2)
-{
+bool __fastcall sub_1BC0(int a1, int a2) {
   return (a2 & 0xFFFFFFF0) == 112 || (a2 & 0xFFFFFFE0) == 256;
 }
 
 //----- (00001BE0) --------------------------------------------------------
-__int64 __fastcall sub_1BE0(int a1, int a2)
-{
+__int64 __fastcall sub_1BE0(int a1, int a2) {
   unsigned int v4; // r0
-  _QWORD *v5; // r0
-  int v6; // r0
+  _QWORD *v5;      // r0
+  int v6;          // r0
 
   v4 = a2 & 0xFFFFFFF0;
-  if ( (a2 & 0xFFFFFFF0) == 112 )
-  {
-    if ( !*(_BYTE *)(a1 + 75) )
-    {
+  if ((a2 & 0xFFFFFFF0) == 112) {
+    if (!*(_BYTE *)(a1 + 75)) {
       *(_BYTE *)(a1 + 75) = 1;
       sub_18D4();
     }
     v6 = a1 + 8 * a2 - 552;
-  }
-  else if ( v4 == 272 )
-  {
-    if ( !*(_BYTE *)(a1 + 74) )
-    {
+  } else if (v4 == 272) {
+    if (!*(_BYTE *)(a1 + 74)) {
       *(_BYTE *)(a1 + 74) = 1;
       sub_18CC((_QWORD *)(a1 + 216));
     }
     v6 = a1 + 8 * a2 - 1960;
-  }
-  else
-  {
-    if ( v4 != 256 )
-      sub_1EC4(
-        "unw_fpreg_t libunwind::Registers_arm::getFloatRegister(int)",
-        "external/libunwind_llvm/src/Registers.hpp",
-        1673,
-        "Unknown ARM float register");
-    if ( !*(_BYTE *)(a1 + 73) )
-    {
+  } else {
+    if (v4 != 256)
+      sub_1EC4("unw_fpreg_t libunwind::Registers_arm::getFloatRegister(int)",
+               "external/libunwind_llvm/src/Registers.hpp", 1673,
+               "Unknown ARM float register");
+    if (!*(_BYTE *)(a1 + 73)) {
       *(_BYTE *)(a1 + 73) = 1;
       v5 = (_QWORD *)(a1 + 80);
-      if ( *(_BYTE *)(a1 + 72) )
+      if (*(_BYTE *)(a1 + 72))
         sub_18C4(v5);
       else
         sub_18BC(v5);
@@ -1619,49 +1478,39 @@ __int64 __fastcall sub_1BE0(int a1, int a2)
 }
 
 //----- (00001C84) --------------------------------------------------------
-int __fastcall sub_1C84(int a1, int a2, int a3, int a4)
-{
+int __fastcall sub_1C84(int a1, int a2, int a3, int a4) {
   unsigned int v6; // r0
-  _QWORD *v9; // r0
-  int result; // r0
-  int v11; // r1
+  _QWORD *v9;      // r0
+  int result;      // r0
+  int v11;         // r1
 
   v6 = a2 & 0xFFFFFFF0;
-  if ( (a2 & 0xFFFFFFF0) == 112 )
-  {
-    if ( !*(_BYTE *)(a1 + 75) )
-    {
+  if ((a2 & 0xFFFFFFF0) == 112) {
+    if (!*(_BYTE *)(a1 + 75)) {
       *(_BYTE *)(a1 + 75) = 1;
       sub_18D4();
     }
     result = a1 + 8 * a2;
     *(_DWORD *)(result - 548) = a4;
     LOWORD(v11) = -552;
-  }
-  else if ( v6 == 272 )
-  {
-    if ( !*(_BYTE *)(a1 + 74) )
-    {
+  } else if (v6 == 272) {
+    if (!*(_BYTE *)(a1 + 74)) {
       *(_BYTE *)(a1 + 74) = 1;
       sub_18CC((_QWORD *)(a1 + 216));
     }
     result = a1 + 8 * a2;
     *(_DWORD *)(result - 1956) = a4;
     LOWORD(v11) = -1960;
-  }
-  else
-  {
-    if ( v6 != 256 )
+  } else {
+    if (v6 != 256)
       sub_1EC4(
-        "void libunwind::Registers_arm::setFloatRegister(int, unw_fpreg_t)",
-        "external/libunwind_llvm/src/Registers.hpp",
-        1700,
-        "Unknown ARM float register");
-    if ( !*(_BYTE *)(a1 + 73) )
-    {
+          "void libunwind::Registers_arm::setFloatRegister(int, unw_fpreg_t)",
+          "external/libunwind_llvm/src/Registers.hpp", 1700,
+          "Unknown ARM float register");
+    if (!*(_BYTE *)(a1 + 73)) {
       *(_BYTE *)(a1 + 73) = 1;
       v9 = (_QWORD *)(a1 + 80);
-      if ( *(_BYTE *)(a1 + 72) )
+      if (*(_BYTE *)(a1 + 72))
         sub_18C4(v9);
       else
         sub_18BC(v9);
@@ -1676,44 +1525,41 @@ int __fastcall sub_1C84(int a1, int a2, int a3, int a4)
 }
 
 //----- (00001D50) --------------------------------------------------------
-bool __fastcall sub_1D50(_DWORD *a1)
-{
+bool __fastcall sub_1D50(_DWORD *a1) {
   _BOOL4 result; // r0
-  __int64 v3; // kr00_8
-  int v4; // r0
+  __int64 v3;    // kr00_8
+  int v4;        // r0
 
-  if ( *((_BYTE *)a1 + 528) )
+  if (*((_BYTE *)a1 + 528))
     return 0;
   result = sub_1EF0((int)a1);
-  if ( !result )
+  if (!result)
     return result;
-  (*(void (__fastcall **)(_DWORD *, int))(*a1 + 52))(a1, 1);
-  if ( *((_BYTE *)a1 + 528) )
+  (*(void(__fastcall **)(_DWORD *, int))(*a1 + 52))(a1, 1);
+  if (*((_BYTE *)a1 + 528))
     return 0;
-  if ( a1[126] )
-  {
+  if (a1[126]) {
     v3 = *(_QWORD *)(*a1 + 12);
-    v4 = ((int (__fastcall *)(_DWORD *, int))v3)(a1, -2);
-    ((void (__fastcall *)(_DWORD *, int, int))HIDWORD(v3))(a1, -2, a1[126] + v4);
+    v4 = ((int(__fastcall *)(_DWORD *, int))v3)(a1, -2);
+    ((void(__fastcall *)(_DWORD *, int, int))HIDWORD(v3))(a1, -2, a1[126] + v4);
   }
   return 1;
 }
 
 //----- (00001DA0) --------------------------------------------------------
-_DWORD *__fastcall sub_1DA0(int a1, _DWORD *a2)
-{
-  int *v2; // r0
+_DWORD *__fastcall sub_1DA0(int a1, _DWORD *a2) {
+  int *v2;        // r0
   _DWORD *result; // r0
-  int v4; // r2
-  int v5; // r3
-  int v6; // r4
-  int v7; // r12
-  int v8; // lr
-  _DWORD *v9; // r1
-  int v10; // r3
-  int v11; // r4
-  int v12; // r12
-  int v13; // lr
+  int v4;         // r2
+  int v5;         // r3
+  int v6;         // r4
+  int v7;         // r12
+  int v8;         // lr
+  _DWORD *v9;     // r1
+  int v10;        // r3
+  int v11;        // r4
+  int v12;        // r12
+  int v13;        // lr
 
   v2 = (int *)(a1 + 488);
   v4 = *v2;
@@ -1741,8 +1587,7 @@ _DWORD *__fastcall sub_1DA0(int a1, _DWORD *a2)
 }
 
 //----- (00001DB8) --------------------------------------------------------
-int __fastcall sub_1DB8(int a1)
-{
+int __fastcall sub_1DB8(int a1) {
   int v1; // r4
 
   v1 = a1 + 8;
@@ -1751,69 +1596,63 @@ int __fastcall sub_1DB8(int a1)
 }
 
 //----- (00001DCE) --------------------------------------------------------
-int __fastcall sub_1DCE(int a1)
-{
-  return *(unsigned __int8 *)(a1 + 529);
-}
+int __fastcall sub_1DCE(int a1) { return *(unsigned __int8 *)(a1 + 529); }
 
 //----- (00001DD4) --------------------------------------------------------
-int __fastcall sub_1DD4(int a1, int a2, int a3, _DWORD *a4)
-{
-  int v7; // r7
-  char v9[8]; // [sp+8h] [bp-28h] BYREF
+int __fastcall sub_1DD4(int a1, int a2, int a3, _DWORD *a4) {
+  int v7;          // r7
+  char v9[8];      // [sp+8h] [bp-28h] BYREF
   const char *v10; // [sp+10h] [bp-20h]
-  int v11; // [sp+14h] [bp-1Ch]
+  int v11;         // [sp+14h] [bp-1Ch]
 
-  v7 = (*(int (__fastcall **)(int, int))(*(_DWORD *)a1 + 12))(a1, -1);
-  if ( !dladdr(v7, v9) || !v10 )
+  v7 = (*(int(__fastcall **)(int, int))(*(_DWORD *)a1 + 12))(a1, -1);
+  if (!dladdr(v7, v9) || !v10)
     return 0;
   _snprintf_chk(a2, a3, 0, -1, "%s", v10);
   *a4 = v7 - v11;
   return 1;
 }
 // 9B0: using guessed type int __fastcall dladdr(_DWORD, _DWORD);
-// 9BC: using guessed type int _snprintf_chk(_DWORD, _DWORD, _DWORD, _DWORD, const char *, ...);
-// 1DD4: using guessed type char var_28[8];
+// 9BC: using guessed type int _snprintf_chk(_DWORD, _DWORD, _DWORD, _DWORD,
+// const char *, ...); 1DD4: using guessed type char var_28[8];
 
 //----- (00001E44) --------------------------------------------------------
-int __fastcall sub_1E44(int *a1, int a2)
-{
-  int v4; // r5
+int __fastcall sub_1E44(int *a1, int a2) {
+  int v4;    // r5
   int v6[2]; // [sp+0h] [bp-20h] BYREF
   int v7[6]; // [sp+8h] [bp-18h] BYREF
 
-  v4 = (*(int (__fastcall **)(int *, int))(*a1 + 12))(a1, -1) & 0xFFFFFFFE;
+  v4 = (*(int(__fastcall **)(int *, int))(*a1 + 12))(a1, -1) & 0xFFFFFFFE;
   v7[0] = 0;
-  if ( a2 )
+  if (a2)
     --v4;
   v6[0] = _gnu_Unwind_Find_exidx(v4, v7);
   v6[1] = v7[0];
-  if ( !v6[0] || !v7[0] || !sub_1F9C(a1, v4, v6) )
+  if (!v6[0] || !v7[0] || !sub_1F9C(a1, v4, v6))
     *((_BYTE *)a1 + 528) = 1;
   return _stack_chk_guard - v7[1];
 }
-// 9C8: using guessed type int __fastcall _gnu_Unwind_Find_exidx(_DWORD, _DWORD);
+// 9C8: using guessed type int __fastcall _gnu_Unwind_Find_exidx(_DWORD,
+// _DWORD);
 
 //----- (00001EBA) --------------------------------------------------------
-int __fastcall sub_1EBA(int result)
-{
+int __fastcall sub_1EBA(int result) {
   *(_BYTE *)(result + 72) = 1;
   return result;
 }
 
 //----- (00001EC4) --------------------------------------------------------
-void __fastcall __noreturn sub_1EC4(const char *a1, const char *a2, int a3, const char *a4)
-{
+void __fastcall __noreturn sub_1EC4(const char *a1, const char *a2, int a3,
+                                    const char *a4) {
   fprintf(stderr, "libunwind: %s %s:%d - %s\n", a1, a2, a3, a4);
   abort();
 }
 
 //----- (00001EF0) --------------------------------------------------------
-bool __fastcall sub_1EF0(int a1)
-{
+bool __fastcall sub_1EF0(int a1) {
   unsigned int *v2; // r0
-  unsigned int v4; // [sp+4h] [bp-1Ch] BYREF
-  unsigned int v5; // [sp+8h] [bp-18h] BYREF
+  unsigned int v4;  // [sp+4h] [bp-1Ch] BYREF
+  unsigned int v5;  // [sp+8h] [bp-18h] BYREF
 
   v4 = 0;
   v5 = 0;
@@ -1822,99 +1661,88 @@ bool __fastcall sub_1EF0(int a1)
 }
 
 //----- (00001F44) --------------------------------------------------------
-_DWORD *__fastcall sub_1F44(int a1)
-{
-  int v2; // r0
+_DWORD *__fastcall sub_1F44(int a1) {
+  int v2;         // r0
   _DWORD *result; // r0
 
-  if ( *(_BYTE *)(a1 + 65) )
-  {
-    if ( *(_BYTE *)(a1 + 64) )
+  if (*(_BYTE *)(a1 + 65)) {
+    if (*(_BYTE *)(a1 + 64))
       sub_25E8();
     else
       sub_25E0();
   }
-  if ( (unsigned __int8)*(_WORD *)(a1 + 66) )
-  {
+  if ((unsigned __int8)*(_WORD *)(a1 + 66)) {
     sub_25F0();
     v2 = *(unsigned __int8 *)(a1 + 67);
-  }
-  else
-  {
+  } else {
     v2 = HIBYTE(*(unsigned __int16 *)(a1 + 66));
   }
-  if ( v2 )
+  if (v2)
     sub_25F8((int *)(a1 + 336));
   result = (_DWORD *)*(unsigned __int8 *)(a1 + 68);
-  if ( *(_BYTE *)(a1 + 68) )
+  if (*(_BYTE *)(a1 + 68))
     return sub_2660((int *)(a1 + 464));
   return result;
 }
 
 //----- (00001F9C) --------------------------------------------------------
-int __fastcall sub_1F9C(int *a1, int a2, _DWORD *a3)
-{
-  int v4; // r5
-  int v5; // r6
-  char *v6; // r5
-  int *v7; // r0
-  int v8; // r3
-  int v9; // r7
-  int *v10; // r6
-  int (__fastcall *v11)(int, int, int); // lr
-  int v12; // r12
-  int v13; // r9
-  int v14; // r6
-  int v15; // r6
-  unsigned int v16; // r2
-  int v18[3]; // [sp+14h] [bp-34h] BYREF
-  int v19; // [sp+20h] [bp-28h] BYREF
+int __fastcall sub_1F9C(int *a1, int a2, _DWORD *a3) {
+  int v4;                               // r5
+  int v5;                               // r6
+  char *v6;                             // r5
+  int *v7;                              // r0
+  int v8;                               // r3
+  int v9;                               // r7
+  int *v10;                             // r6
+  int(__fastcall * v11)(int, int, int); // lr
+  int v12;                              // r12
+  int v13;                              // r9
+  int v14;                              // r6
+  int v15;                              // r6
+  unsigned int v16;                     // r2
+  int v18[3];                           // [sp+14h] [bp-34h] BYREF
+  int v19;                              // [sp+20h] [bp-28h] BYREF
 
   v4 = 0;
   v19 = a2;
   v5 = a3[1];
   sub_2140(v18, 0, a1[1], a3, v5, a1[1], (int)a3, &v19);
-  if ( !v18[0] || v18[0] == v5 )
+  if (!v18[0] || v18[0] == v5)
     return v4;
   v6 = (char *)(*(_DWORD *)v18[2] + 8 * v18[0]);
   v7 = (int *)(v6 - 4);
   v8 = *(_DWORD *)v6;
-  if ( v6 == &byte_4 )
+  if (v6 == &byte_4)
     return 0;
   v9 = *v7;
-  if ( *v7 == 1 )
+  if (*v7 == 1)
     return 0;
-  if ( v9 < 0 )
-  {
+  if (v9 < 0) {
     v12 = 1;
     goto LABEL_11;
   }
   v10 = (int *)((char *)v7 + (v9 | (2 * v9) & 0x80000000));
   v9 = *v10;
-  if ( *v10 <= -1 )
-  {
+  if (*v10 <= -1) {
     v12 = 0;
     v7 = v10;
-LABEL_11:
+  LABEL_11:
     v14 = HIBYTE(v9) & 0xF;
-    if ( v14 == 2 )
-    {
+    if (v14 == 2) {
       v11 = sub_1600;
       v15 = 1;
-    }
-    else
-    {
-      if ( v14 != 1 )
-      {
-        if ( v14 )
+    } else {
+      if (v14 != 1) {
+        if (v14)
           sub_1EC4(
-            "bool libunwind::UnwindCursor<libunwind::LocalAddressSpace, libunwind::Registers_arm>::getInfoFromEHABISectio"
-            "n(pint_t, const libunwind::UnwindInfoSections &) [A = libunwind::LocalAddressSpace, R = libunwind::Registers_arm]",
-            "external/libunwind_llvm/src/UnwindCursor.hpp",
-            776,
-            "unknown personality routine");
+              "bool libunwind::UnwindCursor<libunwind::LocalAddressSpace, "
+              "libunwind::Registers_arm>::getInfoFromEHABISectio"
+              "n(pint_t, const libunwind::UnwindInfoSections &) [A = "
+              "libunwind::LocalAddressSpace, R = libunwind::Registers_arm]",
+              "external/libunwind_llvm/src/UnwindCursor.hpp", 776,
+              "unknown personality routine");
         v13 = (int)(v7 + 1);
-        if ( v12 )
+        if (v12)
           v13 = 0;
         v11 = sub_1594;
         goto LABEL_17;
@@ -1922,17 +1750,19 @@ LABEL_11:
       v11 = sub_15F8;
       v15 = 0;
     }
-    if ( ((BYTE2(v9) != 0) & (unsigned __int8)v12) == 1 )
+    if (((BYTE2(v9) != 0) & (unsigned __int8)v12) == 1)
       sub_1EC4(
-        "bool libunwind::UnwindCursor<libunwind::LocalAddressSpace, libunwind::Registers_arm>::getInfoFromEHABISection(pi"
-        "nt_t, const libunwind::UnwindInfoSections &) [A = libunwind::LocalAddressSpace, R = libunwind::Registers_arm]",
-        "external/libunwind_llvm/src/UnwindCursor.hpp",
-        783,
-        "index inlined table detected but pr function requires extra words");
+          "bool libunwind::UnwindCursor<libunwind::LocalAddressSpace, "
+          "libunwind::Registers_arm>::getInfoFromEHABISection(pi"
+          "nt_t, const libunwind::UnwindInfoSections &) [A = "
+          "libunwind::LocalAddressSpace, R = libunwind::Registers_arm]",
+          "external/libunwind_llvm/src/UnwindCursor.hpp", 783,
+          "index inlined table detected but pr function requires extra words");
     v13 = (int)&v7[BYTE2(v9) + 1];
     goto LABEL_22;
   }
-  v11 = (int (__fastcall *)(int, int, int))((char *)v10 + ((2 * v9) & 0x80000000 | v9));
+  v11 = (int(__fastcall *)(int, int, int))((char *)v10 +
+                                           ((2 * v9) & 0x80000000 | v9));
   v12 = 0;
   v13 = (int)&v10[HIBYTE(v10[1]) + 2];
   v7 = v10;
@@ -1945,9 +1775,9 @@ LABEL_22:
   a1[123] = (int)&v6[v8 | (2 * v8) & 0x80000000];
   a1[124] = v13;
   a1[125] = (int)v11;
-  if ( v15 )
+  if (v15)
     v15 = 2;
-  if ( v12 )
+  if (v12)
     v15 = 1;
   v4 = 1;
   a1[127] = v15;
@@ -1956,22 +1786,22 @@ LABEL_22:
 // 4: using guessed type char;
 
 //----- (00002140) --------------------------------------------------------
-_DWORD *__fastcall sub_2140(_DWORD *a1, int a2, int a3, _DWORD *a4, int a5, int a6, int a7, _DWORD *a8)
-{
+_DWORD *__fastcall sub_2140(_DWORD *a1, int a2, int a3, _DWORD *a4, int a5,
+                            int a6, int a7, _DWORD *a8) {
   unsigned int v8; // r4
   unsigned int v9; // r5
-  int v10; // r6
+  int v10;         // r6
 
   v8 = a5 - a2;
-  while ( 1 )
-  {
+  while (1) {
     v9 = v8;
-    if ( !v8 )
+    if (!v8)
       break;
     v10 = a2 + (v8 >> 1);
     v8 >>= 1;
-    if ( *a8 >= *a4 + 8 * v10 + ((2 * *(_DWORD *)(*a4 + 8 * v10)) & 0x80000000 | *(_DWORD *)(*a4 + 8 * v10)) )
-    {
+    if (*a8 >= *a4 + 8 * v10 +
+                   ((2 * *(_DWORD *)(*a4 + 8 * v10)) & 0x80000000 |
+                    *(_DWORD *)(*a4 + 8 * v10))) {
       v8 = v9 - 1 - v8;
       a2 = v10 + 1;
     }
@@ -1983,37 +1813,24 @@ _DWORD *__fastcall sub_2140(_DWORD *a1, int a2, int a3, _DWORD *a4, int a5, int 
 }
 
 //----- (000025CC) --------------------------------------------------------
-int __fastcall sub_25CC(int a1)
-{
-  return (*(int (__fastcall **)(_DWORD, _DWORD, _DWORD, _DWORD))(a1 + 60))(
-           *(_DWORD *)a1,
-           *(_DWORD *)(a1 + 4),
-           *(_DWORD *)(a1 + 8),
-           *(_DWORD *)(a1 + 12));
+int __fastcall sub_25CC(int a1) {
+  return (*(int(__fastcall **)(_DWORD, _DWORD, _DWORD, _DWORD))(a1 + 60))(
+      *(_DWORD *)a1, *(_DWORD *)(a1 + 4), *(_DWORD *)(a1 + 8),
+      *(_DWORD *)(a1 + 12));
 }
 
 //----- (000025E0) --------------------------------------------------------
-void sub_25E0()
-{
-  ;
-}
+void sub_25E0() { ; }
 
 //----- (000025E8) --------------------------------------------------------
-void sub_25E8()
-{
-  ;
-}
+void sub_25E8() { ; }
 
 //----- (000025F0) --------------------------------------------------------
-void sub_25F0()
-{
-  ;
-}
+void sub_25F0() { ; }
 
 //----- (000025F8) --------------------------------------------------------
-_DWORD *__fastcall sub_25F8(int *a1)
-{
-  int *v5; // r0
+_DWORD *__fastcall sub_25F8(int *a1) {
+  int *v5;        // r0
   _DWORD *result; // r0
 
   _T1 = *a1;
@@ -2068,9 +1885,8 @@ _DWORD *__fastcall sub_25F8(int *a1)
 }
 
 //----- (0000263C) --------------------------------------------------------
-_DWORD *__fastcall sub_263C(int *a1)
-{
-  int *v5; // r0
+_DWORD *__fastcall sub_263C(int *a1) {
+  int *v5;        // r0
   _DWORD *result; // r0
 
   _T1 = *a1;
@@ -2088,18 +1904,11 @@ _DWORD *__fastcall sub_263C(int *a1)
 
 //----- (00002650) --------------------------------------------------------
 // attributes: thunk
-int __fastcall sub_2650(int a1)
-{
-  return sub_25CC(a1);
-}
+int __fastcall sub_2650(int a1) { return sub_25CC(a1); }
 
 //----- (00002660) --------------------------------------------------------
 // attributes: thunk
-_DWORD *__fastcall sub_2660(int *a1)
-{
-  return sub_263C(a1);
-}
+_DWORD *__fastcall sub_2660(int *a1) { return sub_263C(a1); }
 
 // nfuncs=126 queued=64 decompiled=64 lumina nreq=0 worse=0 better=0
 // ALL OK, 64 function(s) have been successfully decompiled
-

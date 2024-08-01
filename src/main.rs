@@ -1,10 +1,19 @@
 use std::convert::TryInto;
+use std::io::Cursor;
+use std::mem::transmute;
 use std::process::Command;
 use std::ptr::{null, null_mut};
+use std::thread::sleep;
+use std::time::Duration;
 extern crate libc;
+
+mod bitconvert;
+use crate::bitconvert::convert_i24_buf_to_le_i32;
+use crate::bitconvert::convert_i32_list_to_bytes;
 
 use libc::{c_int, c_uint, c_void, FILE};
 use std::ffi::CStr;
+use wave_stream::reader::ReadEx;
 
 use libc::free;
 use libc::malloc;
@@ -17,16 +26,17 @@ use tokio::io::AsyncWriteExt;
 use tokio::io::{stdout, AsyncReadExt};
 mod libtinyalsa;
 use crate::libtinyalsa::{
-    pcm_close, pcm_config, pcm_format_PCM_FORMAT_S32_LE, pcm_format_to_bits, pcm_frames_to_bytes,
-    pcm_get_buffer_size, pcm_get_error, pcm_is_ready, pcm_mmap_begin, pcm_mmap_commit, pcm_open,
-    pcm_read, PCM_IN,
+    pcm_close, pcm_config, pcm_format_PCM_FORMAT_MAX, pcm_format_PCM_FORMAT_S16_LE,
+    pcm_format_PCM_FORMAT_S24_LE, pcm_format_PCM_FORMAT_S32_LE, pcm_format_to_bits,
+    pcm_frames_to_bytes, pcm_get_buffer_size, pcm_get_error, pcm_is_ready, pcm_mmap_begin,
+    pcm_mmap_commit, pcm_open, pcm_params_get, pcm_read, PCM_IN,
 };
 // pcm_bytes_to_frames
 
 //const NAMED_PIPE: &str = "./test.wav";
 // const NAMED_PIPE: &str = "./tests/resources/alexa.wav";
 // const NAMED_PIPE: &str = "/data/local/tmp/audio_fifo";
-const AUDIO_FILE: &str = "./audio_fifo";
+// const AUDIO_FILE: &str = "./audio_fifo";
 
 #[tokio::main]
 async fn main() {
@@ -40,9 +50,9 @@ async fn main() {
     rustpotter_config.detector.min_scores = 20;
     rustpotter_config.detector.eager = true;
 
-    // Command::new("killall")
-    //     .arg("mixer")
-    //     .status().unwrap();
+    Command::new("killall").arg("mixer").status().unwrap();
+    sleep(Duration::from_secs(1));
+    // Command::new("killall").arg("mixer").status().unwrap();
 
     println!("{}", openssl::version::version());
     println!("Hello, world!");
@@ -50,12 +60,20 @@ async fn main() {
     // wav setup
     println!("setup wav reader!");
 
-    let card: c_uint = 1;
-    let device: c_uint = 0;
-    let rate: c_uint = 48000;
-    let channels: c_uint = 2;
-    let period_size = 1024;
-    let format = pcm_format_PCM_FORMAT_S32_LE;
+    let card: c_uint = 0;
+    let device: c_uint = 24;
+    let rate: c_uint = 16000;
+    let channels: c_uint = 9;
+    let period_size = 512;
+    let period_count = 5;
+    let format = pcm_format_PCM_FORMAT_MAX;
+    //
+    // let card: c_uint = 1;
+    // let device: c_uint = 0;
+    // let rate: c_uint = 48000;
+    // let channels: c_uint = 2;
+    // let period_size = 1024;
+    // let format = pcm_format_PCM_FORMAT_S32_LE;
 
     // let wav_spec: rustpotter::AudioFmt = AudioFmt::try_from(wav_reader.spec()).expect("Unable to get wav spec")
     rustpotter_config.fmt = AudioFmt {
@@ -75,20 +93,18 @@ async fn main() {
 
     println!("at loop");
 
-    // let mut buf = vec![0; rustpotter.get_bytes_per_frame()];
+    let mut pcm_config = Box::into_raw(Box::new(pcm_config {
+        channels: channels,
+        rate: rate,
+        format: format,
+        period_size: period_size,
+        period_count: period_count,
+        start_threshold: 0,
+        silence_threshold: 0,
+        stop_threshold: 0,
+    }));
 
     unsafe {
-        let mut pcm_config = Box::into_raw(Box::new(pcm_config {
-            channels: channels,
-            rate: rate,
-            format: format,
-            period_size: period_size,
-            period_count: 2,
-            start_threshold: 0,
-            silence_threshold: 0,
-            stop_threshold: 0,
-        }));
-
         let pcm = pcm_open(card, device, PCM_IN, pcm_config);
 
         if pcm_is_ready(pcm) == 0 {
@@ -101,12 +117,12 @@ async fn main() {
         }
 
         // pcm->buffer_size = config->period_count * config->period_size;
+        // frames
         let buffer_size = pcm_get_buffer_size(pcm);
         let bytes = pcm_frames_to_bytes(pcm, buffer_size);
-        // let buf = malloc(bytes.try_into().unwrap());
-        // let mut buf = Vec::<u8>::with_capacity(bytes.try_into().unwrap());
         let mut buf: Vec<u8> = vec![0; bytes as usize];
-        // let mut buf: Vec<u8> = vec![0.try_into().unwrap(), bytes.try_into().unwrap()];
+
+        // let mut i32_buf: Vec<i32> = vec![0; buffer_size.try_into().unwrap()];
 
         let bits = pcm_format_to_bits(format);
         println!(
@@ -114,22 +130,10 @@ async fn main() {
             channels, rate, bits
         );
 
-        println!("before file");
-        // let mut file = File::create(AUDIO_FILE).await.expect("Failed to open file");
-        // file.write_all(b"TESTING").await.unwrap();
-
         let mut stdout = stdout();
 
         loop {
             let frames_read = pcm_read(pcm, buf.as_mut_ptr() as *mut c_void, bytes);
-            // stdout.write_all(&buf).await.unwrap();
-
-            println!(
-                "bufferlen: {:} bytes: {:}, sampframe: {:}",
-                buf.len(),
-                rustpotter.get_bytes_per_frame(),
-                rustpotter.get_samples_per_frame()
-            );
 
             if frames_read < 0 {
                 let error = pcm_get_error(pcm);
@@ -138,8 +142,23 @@ async fn main() {
                     frames_read,
                     CStr::from_ptr(error).to_str().unwrap()
                 );
-                continue;
+                break;
             }
+
+            // samples.into_iter().take_while(predicate)
+
+            // coverts i24 buf into i32
+            let i32_buf = convert_i24_buf_to_le_i32(&buf);
+            // println!(
+            //     "pcm_buffer_size: {:} i32 buf len {:?}, rus_bytes/frame: {:}, rus_samp/frame: {:}",
+            //     buf.len(),
+            //     i32_buf.len(),
+            //     rustpotter.get_bytes_per_frame(),
+            //     rustpotter.get_samples_per_frame()
+            // );
+
+            let i32_in_bytes = convert_i32_list_to_bytes(&i32_buf);
+            stdout.write(&i32_in_bytes).await;
 
             /*
             pub fn process_samples<T: Sample>(
@@ -153,8 +172,7 @@ async fn main() {
                 self.process_audio(float_samples)
             }
              */
-
-            let detection = rustpotter.process_bytes(&buf);
+            let detection = rustpotter.process_samples::<i32>(i32_buf);
 
             if let Some(detection) = detection {
                 println!("{:?}", detection);

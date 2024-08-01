@@ -548,12 +548,12 @@ pub struct pcm_config {
     pub period_size: ::std::os::raw::c_uint,
     pub period_count: ::std::os::raw::c_uint,
     pub format: pcm_format,
-    pub start_threshold: ::std::os::raw::c_ulong,
-    pub stop_threshold: ::std::os::raw::c_ulong,
-    pub silence_threshold: ::std::os::raw::c_ulong,
-    // pub start_threshold: ::std::os::raw::c_uint,
-    // pub stop_threshold: ::std::os::raw::c_uint,
-    // pub silence_threshold: ::std::os::raw::c_uint,
+    // pub start_threshold: ::std::os::raw::c_ulong,
+    // pub stop_threshold: ::std::os::raw::c_ulong,
+    // pub silence_threshold: ::std::os::raw::c_ulong,
+    pub start_threshold: ::std::os::raw::c_uint,
+    pub stop_threshold: ::std::os::raw::c_uint,
+    pub silence_threshold: ::std::os::raw::c_uint,
 }
 #[test]
 fn bindgen_test_layout_pcm_config() {
