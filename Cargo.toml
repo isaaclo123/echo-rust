@@ -7,11 +7,13 @@ edition = "2018"
 LD_LIBRARY_PATH = "$NIX_LD_LIBRARY_PATH"
 
 [dependencies]
+async-ringbuf = "0.2.1"
 hound = "3.5.1"
 i24 = "1.0.1"
 libc = "0.2.155"
 mio = "1.0.1"
 openssl = { version="0.10.42", features = ["vendored"] }
+ringbuf = "0.4.1"
 rustpotter = "3.0.2"
 tokio = { version="1.39.2", features = ["full"] }
 wave_stream = "0.5.0"

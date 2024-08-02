@@ -1,9 +1,11 @@
 use std::convert::TryInto;
 use std::io::Cursor;
 use std::mem::transmute;
+use std::os::unix::thread;
 use std::process::Command;
 use std::ptr::{null, null_mut};
-use std::thread::sleep;
+use std::sync::Arc;
+use std::thread::{sleep, spawn};
 use std::time::Duration;
 extern crate libc;
 
@@ -12,6 +14,7 @@ use crate::bitconvert::convert_i24_buf_to_le_i32;
 use crate::bitconvert::convert_i32_list_to_bytes;
 
 use libc::{c_int, c_uint, c_void, FILE};
+use ringbuf::{traits::*, HeapRb, SharedRb};
 use std::ffi::CStr;
 use wave_stream::reader::ReadEx;
 
@@ -31,20 +34,9 @@ use crate::libtinyalsa::{
     pcm_frames_to_bytes, pcm_get_buffer_size, pcm_get_error, pcm_is_ready, pcm_mmap_begin,
     pcm_mmap_commit, pcm_open, pcm_params_get, pcm_read, PCM_IN,
 };
-// pcm_bytes_to_frames
-
-//const NAMED_PIPE: &str = "./test.wav";
-// const NAMED_PIPE: &str = "./tests/resources/alexa.wav";
-// const NAMED_PIPE: &str = "/data/local/tmp/audio_fifo";
-// const AUDIO_FILE: &str = "./audio_fifo";
 
 #[tokio::main]
 async fn main() {
-    // Test linking against OpenSSL.
-    openssl::init();
-    assert!(openssl::version::version().starts_with("OpenSSL "));
-
-    println!("rustpotter config!");
     let mut rustpotter_config = RustpotterConfig::default();
     rustpotter_config.detector.avg_threshold = 0.;
     rustpotter_config.detector.min_scores = 20;
@@ -54,12 +46,7 @@ async fn main() {
     sleep(Duration::from_secs(1));
     // Command::new("killall").arg("mixer").status().unwrap();
 
-    println!("{}", openssl::version::version());
-    println!("Hello, world!");
-
     // wav setup
-    println!("setup wav reader!");
-
     let card: c_uint = 0;
     let device: c_uint = 24;
     let rate: c_uint = 16000;
@@ -75,36 +62,22 @@ async fn main() {
     // let period_size = 1024;
     // let format = pcm_format_PCM_FORMAT_S32_LE;
 
-    // let wav_spec: rustpotter::AudioFmt = AudioFmt::try_from(wav_reader.spec()).expect("Unable to get wav spec")
-    rustpotter_config.fmt = AudioFmt {
-        sample_rate: rate as usize,
-        sample_format: rustpotter::SampleFormat::I32,
-        channels: channels as u16,
-        endianness: rustpotter::Endianness::Little,
-    };
+    let rbuf = HeapRb::<i32>::new((60000 * 2) as usize);
+    let (mut prod, mut cons) = rbuf.split();
 
-    // rustpotter
-    println!("setup rustpotter!");
-    let mut rustpotter = Rustpotter::new(&rustpotter_config).unwrap();
-    println!("add wakeword!");
-    rustpotter
-        .add_wakeword_from_file("alexa", "./tests/resources/alexa.rpw")
-        .unwrap();
-
-    println!("at loop");
-
-    let mut pcm_config = Box::into_raw(Box::new(pcm_config {
-        channels: channels,
-        rate: rate,
-        format: format,
-        period_size: period_size,
-        period_count: period_count,
-        start_threshold: 0,
-        silence_threshold: 0,
-        stop_threshold: 0,
-    }));
-
-    unsafe {
+    // let mut stdout = stdout();
+    spawn(move || unsafe {
+        println!("Spawned PCM");
+        let mut pcm_config = Box::into_raw(Box::new(pcm_config {
+            channels: channels,
+            rate: rate,
+            format: format,
+            period_size: period_size,
+            period_count: period_count,
+            start_threshold: 0,
+            silence_threshold: 0,
+            stop_threshold: 0,
+        }));
         let pcm = pcm_open(card, device, PCM_IN, pcm_config);
 
         if pcm_is_ready(pcm) == 0 {
@@ -130,8 +103,6 @@ async fn main() {
             channels, rate, bits
         );
 
-        let mut stdout = stdout();
-
         loop {
             let frames_read = pcm_read(pcm, buf.as_mut_ptr() as *mut c_void, bytes);
 
@@ -147,35 +118,83 @@ async fn main() {
 
             // coverts i24 buf into i32
             let i32_buf = convert_i24_buf_to_le_i32(&buf);
-            // println!(
-            //     "pcm_buffer_size: {:} i32 buf len {:?}, rus_bytes/frame: {:}, rus_samp/frame: {:}",
-            //     buf.len(),
-            //     i32_buf.len(),
-            //     rustpotter.get_bytes_per_frame(),
-            //     rustpotter.get_samples_per_frame()
-            // );
+            println!(
+                "pcm_buffer_size: {:} i32 buf len {:?}",
+                buf.len(),
+                i32_buf.len(),
+            );
 
-            let i32_in_bytes = convert_i32_list_to_bytes(&i32_buf);
-            stdout.write(&i32_in_bytes).await;
+            let mut backoff = 0;
+            let mut pushed_len = prod.push_slice(&i32_buf);
+            while pushed_len < i32_buf.len() {
+                pushed_len += prod.push_slice(&i32_buf[pushed_len..]);
 
-            /*
-            pub fn process_samples<T: Sample>(
-                &mut self,
-                audio_samples: Vec<T>,
-            ) -> Option<RustpotterDetection> {
-                if audio_samples.len() != self.get_samples_per_frame() {
-                    return None;
+                // if buf not increasing, start backing off of reads
+                if pushed_len == 0 {
+                    sleep(Duration::from_millis(100 * backoff));
+                    backoff += 1;
                 }
-                let float_samples = self.wav_encoder.rencode_and_resample::<T>(audio_samples);
-                self.process_audio(float_samples)
-            }
-             */
-            let detection = rustpotter.process_samples::<i32>(i32_buf);
-
-            if let Some(detection) = detection {
-                println!("{:?}", detection);
             }
         }
+
         pcm_close(pcm);
+    });
+
+    // consumer thread
+    println!("Spawned Consumer");
+    rustpotter_config.fmt = AudioFmt {
+        sample_rate: rate as usize,
+        sample_format: rustpotter::SampleFormat::I32,
+        channels: channels as u16,
+        endianness: rustpotter::Endianness::Little,
+    };
+
+    // rustpotter
+    println!("setup rustpotter!");
+    let mut rustpotter = Rustpotter::new(&rustpotter_config).unwrap();
+    println!("add wakeword!");
+    rustpotter
+        .add_wakeword_from_file("alexa", "./tests/resources/alexa.rpw")
+        .unwrap();
+    loop {
+        let mut buf: Vec<i32> = Vec::new();
+        let mut backoff = 1;
+
+        while buf.len() < rustpotter.get_samples_per_frame() {
+            let old_buf_len = buf.len();
+            // keep taking until we reach rustpotter samples per frame
+            buf.extend(
+                cons.pop_iter()
+                    .take(rustpotter.get_samples_per_frame() - buf.len()),
+            );
+
+            // if buf not increasing, start backing off of reads
+            if buf.len() == old_buf_len {
+                sleep(Duration::from_millis(100 * backoff));
+                backoff += 1;
+            }
+        }
+
+        println!("processing {:} bytes in rustpotter", buf.len());
+        let detection = rustpotter.process_samples::<i32>(buf);
+
+        if let Some(detection) = detection {
+            println!("{:?}", detection);
+        }
+        // let i32_in_bytes = convert_i32_list_to_bytes(&i32_buf);
+        // stdout.write(&i32_in_bytes).await;
+
+        /*
+        pub fn process_samples<T: Sample>(
+            &mut self,
+            audio_samples: Vec<T>,
+        ) -> Option<RustpotterDetection> {
+            if audio_samples.len() != self.get_samples_per_frame() {
+                return None;
+            }
+            let float_samples = self.wav_encoder.rencode_and_resample::<T>(audio_samples);
+            self.process_audio(float_samples)
+        }
+         */
     }
 }
