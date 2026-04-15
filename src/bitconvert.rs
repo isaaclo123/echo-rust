@@ -11,6 +11,19 @@ pub fn convert_i24_buf_to_le_i32(old_buf: &[u8]) -> Vec<i32> {
         .collect();
 }
 
+pub fn convert_i24_buf_to_mono_i16(old_buf: &[u8], channels: usize, channel_index: usize) -> Vec<i16> {
+    let samples = convert_i24_buf_to_le_i32(old_buf);
+
+    samples
+        .chunks_exact(channels)
+        .map(|frame| {
+            let sample = frame[channel_index];
+            // Packed 24-bit PCM uses the top 24 bits of the waveform. Shift down to 16-bit PCM.
+            (sample >> 8) as i16
+        })
+        .collect()
+}
+
 pub fn convert_i32_list_to_bytes(i32_buf: &[i32]) -> Vec<u8> {
     return i32_buf
         .into_iter()

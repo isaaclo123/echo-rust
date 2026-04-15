@@ -10,7 +10,7 @@ use std::time::Duration;
 extern crate libc;
 
 mod bitconvert;
-use crate::bitconvert::convert_i24_buf_to_le_i32;
+use crate::bitconvert::convert_i24_buf_to_mono_i16;
 use crate::bitconvert::convert_i32_list_to_bytes;
 
 use libc::{c_int, c_uint, c_void, FILE};
@@ -53,7 +53,8 @@ async fn main() {
     let channels: c_uint = 9;
     let period_size = 512;
     let period_count = 5;
-    let format = pcm_format_PCM_FORMAT_MAX;
+    let format = pcm_format_PCM_FORMAT_S24_LE;
+    let rustpotter_channel_index: usize = 0;
     //
     // let card: c_uint = 1;
     // let device: c_uint = 0;
@@ -62,7 +63,7 @@ async fn main() {
     // let period_size = 1024;
     // let format = pcm_format_PCM_FORMAT_S32_LE;
 
-    let rbuf = HeapRb::<i32>::new((60000 * 2) as usize);
+    let rbuf = HeapRb::<i16>::new((60000 * 2) as usize);
     let (mut prod, mut cons) = rbuf.split();
 
     // let mut stdout = stdout();
@@ -116,18 +117,18 @@ async fn main() {
                 break;
             }
 
-            // coverts i24 buf into i32
-            let i32_buf = convert_i24_buf_to_le_i32(&buf);
+            let i16_buf =
+                convert_i24_buf_to_mono_i16(&buf, channels as usize, rustpotter_channel_index);
             println!(
-                "pcm_buffer_size: {:} i32 buf len {:?}",
+                "pcm_buffer_size: {:} mono i16 buf len {:?}",
                 buf.len(),
-                i32_buf.len(),
+                i16_buf.len(),
             );
 
             let mut backoff = 0;
-            let mut pushed_len = prod.push_slice(&i32_buf);
-            while pushed_len < i32_buf.len() {
-                pushed_len += prod.push_slice(&i32_buf[pushed_len..]);
+            let mut pushed_len = prod.push_slice(&i16_buf);
+            while pushed_len < i16_buf.len() {
+                pushed_len += prod.push_slice(&i16_buf[pushed_len..]);
 
                 // if buf not increasing, start backing off of reads
                 if pushed_len == 0 {
@@ -144,8 +145,8 @@ async fn main() {
     println!("Spawned Consumer");
     rustpotter_config.fmt = AudioFmt {
         sample_rate: rate as usize,
-        sample_format: rustpotter::SampleFormat::I32,
-        channels: channels as u16,
+        sample_format: rustpotter::SampleFormat::I16,
+        channels: 1,
         endianness: rustpotter::Endianness::Little,
     };
 
@@ -157,7 +158,7 @@ async fn main() {
         .add_wakeword_from_file("alexa", "./tests/resources/alexa.rpw")
         .unwrap();
     loop {
-        let mut buf: Vec<i32> = Vec::new();
+        let mut buf: Vec<i16> = Vec::new();
         let mut backoff = 1;
 
         while buf.len() < rustpotter.get_samples_per_frame() {
@@ -176,7 +177,7 @@ async fn main() {
         }
 
         println!("processing {:} bytes in rustpotter", buf.len());
-        let detection = rustpotter.process_samples::<i32>(buf);
+        let detection = rustpotter.process_samples::<i16>(buf);
 
         if let Some(detection) = detection {
             println!("{:?}", detection);
